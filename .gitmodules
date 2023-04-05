@@ -1,0 +1,12 @@
+[submodule "thirdparty/cmake/sdl2"]
+	path = thirdparty/cmake/sdl2
+	url = https://github.com/aminosbh/sdl2-cmake-modules
+[submodule "thirdparty/imgui"]
+	path = thirdparty/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "thirdparty/imnodes"]
+	path = thirdparty/imnodes
+	url = https://github.com/Nelarius/imnodes.git
+[submodule "thirdparty/stb"]
+	path = thirdparty/stb
+	url = https://github.com/nothings/stb.git
