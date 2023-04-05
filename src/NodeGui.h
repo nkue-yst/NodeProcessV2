@@ -4,6 +4,8 @@
  * Edited:  2023/04/05
  **********/
 
+#include "NodeManager.h"
+
 #include "SDL.h"
 #include "SDL_opengl.h"
 
@@ -22,6 +24,9 @@ public:
     // Initialize systems
     bool init();
 
+    // Main loop
+    void loop();
+
     // Error and quit
     void abort();
 
@@ -38,8 +43,8 @@ public:
     void setupImGui();
 
 private:
-    uint32_t m_win_width;
-    uint32_t m_win_height;
+    int32_t m_win_width;
+    int32_t m_win_height;
 
     SDL_Window* m_win;
     SDL_GLContext m_gl_context;
@@ -47,4 +52,8 @@ private:
 
     ImGuiContext* m_imgui_context;
     ImNodesContext* m_imnodes_context;
+
+    ImVec4 m_bg_color;
+
+    NodeManager* m_node_manager;
 };

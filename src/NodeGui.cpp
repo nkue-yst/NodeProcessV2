@@ -13,6 +13,7 @@ NodeGui::NodeGui()
     : m_win_width(1280)
     , m_win_height(720)
 {
+    this->m_bg_color = ImVec4(0.4f, 0.4f, 0.4f, 1.f);
 }
 
 NodeGui::~NodeGui()
@@ -34,7 +35,68 @@ bool NodeGui::init()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
+    this->m_node_manager = new NodeManager();
+
     return true;
+}
+
+void NodeGui::loop()
+{
+    // Font settings
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->Build();
+
+    bool done = false;
+    while (!done)
+    {
+        // Process terminate input
+        SDL_Event ev;
+        while (SDL_PollEvent(&ev))
+        {
+            ImGui_ImplSDL2_ProcessEvent(&ev);
+
+            if (ev.type == SDL_QUIT)
+            {
+                done = true;
+            }
+            else if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_CLOSE && ev.window.windowID == SDL_GetWindowID(this->m_win))
+            {
+                done = true;
+            }
+        }
+
+        // Update main window size
+        SDL_GetWindowSize(this->m_win, &this->m_win_width, &this->m_win_height);
+
+        // Start new ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+
+        // Start drawing window
+        ImGui::SetNextWindowSize(ImVec2(this->m_win_width, this->m_win_height), ImGuiCond_Always);
+        ImGui::SetNextWindowPos(ImVec2(0.f, 0.f));
+        ImGui::Begin("NodeEditor", nullptr, ImGuiWindowFlags_MenuBar);
+
+        // End drawing window
+        ImGui::End();
+
+        /////////////////
+        /// Rendering ///
+        /////////////////
+        ImGui::Render();
+
+        glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+        glClearColor(
+            this->m_bg_color.x * this->m_bg_color.w,
+            this->m_bg_color.y * this->m_bg_color.w,
+            this->m_bg_color.z * this->m_bg_color.w,
+            this->m_bg_color.w
+        );
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        SDL_GL_SwapWindow(this->m_win);
+    }
 }
 
 void NodeGui::abort()
@@ -66,9 +128,9 @@ void NodeGui::createWindow()
     SDL_WindowFlags win_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
 
     this->m_win = SDL_CreateWindow(
-        "NodeProcessing",
-        100,
-        100,
+        "NodeProcessing-V2",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
         this->m_win_width,
         this->m_win_height,
         win_flags
@@ -101,4 +163,7 @@ void NodeGui::setupImGui()
 
     ImGui_ImplSDL2_InitForOpenGL(this->m_win, this->m_gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    // Set style
+    ImGui::StyleColorsDark();
 }

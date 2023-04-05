@@ -19,10 +19,11 @@ int main(int argc, char** argv)
     {
         node_gui->abort();
     }
-
     node_gui->createWindow();
     node_gui->createRenderer();
     node_gui->setupImGui();
+
+    node_gui->loop();
 
     node_gui->quit();
 }

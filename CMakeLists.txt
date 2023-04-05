@@ -56,6 +56,7 @@ include_directories(${MAIN_SRC_DIR})
 set(NP_SOURCES
 	${MAIN_SRC_DIR}/main.cpp
 	${MAIN_SRC_DIR}/NodeGui.cpp
+	${MAIN_SRC_DIR}/NodeManager.cpp
 )
 add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES})
 target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} SDL2::Core SDL2::Main)

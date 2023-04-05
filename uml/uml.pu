@@ -2,6 +2,7 @@
 
 class NodeGui {
     +init(): bool
+    +loop(): void
     +abort(): void
     +quit(): void
 
@@ -9,8 +10,8 @@ class NodeGui {
     +createRenderer(): void
     +setupImGui(): void
 
-    -m_win_width: uint32_t
-    -m_win_height: uint32_t
+    -m_win_width: int32_t
+    -m_win_height: int32_t
 
     -m_win: SDL_Window*
     -m_gl_context: SDL_GLContext
@@ -18,6 +19,16 @@ class NodeGui {
 
     -m_imgui_context: ImGuiContext*
     -m_imnodes_context: ImNodesContext*
+
+    -m_bg_color: ImVec4
+
+    -m_node_manager: NodeManager*
 }
+
+class NodeManager {
+
+}
+
+NodeGui *-- NodeManager
 
 @enduml
