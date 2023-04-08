@@ -1,0 +1,42 @@
+@startuml NodeProcessing_Impl
+
+class NodeGui {
+    +init(): bool
+    +loop(): void
+    +abort(): void
+    +quit(): void
+
+    +createWindow(): void
+    +createRenderer(): void
+    +setupImGui(): void
+
+    -m_win_width: int32_t
+    -m_win_height: int32_t
+
+    -m_win: SDL_Window*
+    -m_gl_context: SDL_GLContext
+    -m_renderer: SDL_Renderer*
+
+    -m_imgui_context: ImGuiContext*
+    -m_imnodes_context: ImNodesContext*
+
+    -m_bg_color: ImVec4
+
+    -m_node_manager: NodeManager*
+}
+
+class NodeManager {
+    +addNode(Node* node): void
+    +deleteNode(): void
+
+    -m_node_list: std::vector<Node*>
+}
+
+class Node {
+
+}
+
+NodeGui *-- NodeManager
+NodeManager --> Node
+
+@enduml

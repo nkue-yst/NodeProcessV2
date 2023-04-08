@@ -12,6 +12,9 @@ public:
     NodeManager();
     ~NodeManager();
 
+    void addNode(class Node* node);
+    void deleteNode();
+
 private:
     std::vector<class Node*> m_node_list;
 };

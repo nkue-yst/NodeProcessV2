@@ -15,3 +15,13 @@ NodeManager::NodeManager()
 NodeManager::~NodeManager()
 {
 }
+
+void NodeManager::addNode(Node* node)
+{
+    this->m_node_list.push_back(node);
+}
+
+void NodeManager::deleteNode()
+{
+
+}
