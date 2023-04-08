@@ -67,11 +67,27 @@ abstract class MediaNode {
 
 }
 
+abstract class ProcessNode {
+
+}
+
 class ImageNode {
 
 }
 
 class VideoNode {
+
+}
+
+class AudioNode {
+
+}
+
+class GraphicsProcessNode {
+
+}
+
+class AudioProcessNode {
 
 }
 
@@ -96,8 +112,12 @@ MenuItem <|-- MenuItem_ImageVideo
 MenuItem <|-- MenuItem_Audio
 
 Node <|-- MediaNode
-MediaNode <|-- ImageNode
-MediaNode <|-- VideoNode
+Node <|-- ProcessNode
+MediaNode <|--- ImageNode
+MediaNode <|--- VideoNode
+MediaNode <|--- AudioNode
+ProcessNode <|--- GraphicsProcessNode
+ProcessNode <|--- AudioProcessNode
 
 NodeManager --> Node
 PinManager <-- Pin
