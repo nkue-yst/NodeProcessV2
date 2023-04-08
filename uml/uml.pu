@@ -26,9 +26,14 @@ class NodeGui {
 }
 
 class NodeManager {
+    -m_node_list: std::vector<Node*>
+}
 
+class Node {
+    
 }
 
 NodeGui *-- NodeManager
+NodeManager o-- Node
 
 @enduml

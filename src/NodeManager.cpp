@@ -6,6 +6,8 @@
 
 #include "NodeManager.h"
 
+#include "Node.h"
+
 NodeManager::NodeManager()
 {
 }
