@@ -22,6 +22,8 @@ NodeGui::~NodeGui()
 
 bool NodeGui::init()
 {
+    std::cout << "[INFO]: Initializing subsystems..." << std::endl;
+
     // Initialize SDL system
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -39,6 +41,8 @@ bool NodeGui::init()
     this->m_menu_bar = new MenuBar();
 
     this->m_node_manager = new NodeManager();
+
+    std::cout << "[INFO]: Subsystems initializaion complete." << std::endl;
 
     return true;
 }
@@ -117,12 +121,14 @@ void NodeGui::abort()
 {
     this->quit();
 
-    std::cerr << "[NPV2]: An error occurred and the program will now terminate." << std::endl;
+    std::cerr << "[ERROR]: An error occurred and the program will now terminate." << std::endl;
     std::exit(1);
 }
 
 void NodeGui::quit()
 {
+    std::cout << "[INFO]: Terminating subsystems..." << std::endl;
+
     // Clean up SDL
     SDL_DestroyRenderer(this->m_renderer);
     SDL_DestroyWindow(this->m_win);
