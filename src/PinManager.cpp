@@ -21,6 +21,7 @@ uint32_t PinManager::usePin()
     {
         if (this->m_used_id.find(i) != this->m_used_id.end())
         {
+            this->m_used_id.insert(i);
             return i;
         }
     }

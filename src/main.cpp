@@ -10,27 +10,24 @@
 
 int main(int argc, char** argv)
 {
-    // Main app instance
-    std::unique_ptr<NodeGui> node_gui(new NodeGui);
-
     //////////////////////////////
     ///// Initialize systems /////
     //////////////////////////////
-    if (!node_gui->init())
+    if (!NodeGui::get().init())
     {
-        node_gui->abort();
+        NodeGui::get().abort();
     }
-    node_gui->createWindow();
-    node_gui->createRenderer();
-    node_gui->setupImGui();
+    NodeGui::get().createWindow();
+    NodeGui::get().createRenderer();
+    NodeGui::get().setupImGui();
 
     /////////////////////
     ///// Main loop /////
     /////////////////////
-    node_gui->loop();
+    NodeGui::get().loop();
 
     ////////////////
     ///// Quit /////
     ////////////////
-    node_gui->quit();
+    NodeGui::get().quit();
 }

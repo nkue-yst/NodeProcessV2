@@ -21,9 +21,24 @@
 
 class NodeGui
 {
+private:
+    NodeGui() = default;
+    ~NodeGui() = default;
+
 public:
-    NodeGui();
-    ~NodeGui();
+    NodeGui(const NodeGui&) = delete;
+    NodeGui& operator=(const NodeGui&) = delete;
+    NodeGui(NodeGui&&) = delete;
+    NodeGui& operator=(NodeGui&&) = delete;
+
+    // Getter for singleton instance
+    static inline NodeGui& get()
+    {
+        static NodeGui instance_;
+        return instance_;
+    }
+
+    PinManager& getPinManager() const { return *this->m_pin_manager; }
 
     // Initialize systems
     bool init();

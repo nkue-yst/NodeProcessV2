@@ -10,20 +10,13 @@
 #include <iostream>
 #include <memory>
 
-NodeGui::NodeGui()
-    : m_win_width(1280)
-    , m_win_height(720)
-{
-    this->m_bg_color = ImVec4(0.4f, 0.4f, 0.4f, 1.f);
-}
-
-NodeGui::~NodeGui()
-{
-}
-
 bool NodeGui::init()
 {
     std::cout << "[INFO]: Initializing components..." << std::endl;
+
+    this->m_win_width = 1280;
+    this->m_win_height = 720;
+    this->m_bg_color = ImVec4(0.4f, 0.4f, 0.4f, 1.f);
 
     // Initialize SDL system
     SDL_Init(SDL_INIT_VIDEO);
