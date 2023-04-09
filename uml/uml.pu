@@ -31,7 +31,7 @@ class NodeGui {
 class MenuBar {
     +draw(): void
 
-    +m_menu_items: std::vector<MenuItem>
+    -m_menu_items: std::vector<MenuItem*>
 }
 
 abstract class MenuItem {

@@ -4,6 +4,8 @@
  * Edited:  2023/04/05
  **********/
 
+#pragma once
+
 #include "NodeManager.h"
 
 #include "SDL.h"
@@ -14,6 +16,8 @@
 #include "imgui_impl_opengl3.h"
 #include "imnodes.h"
 #include "ImGuiFileDialog.h"
+
+#include "MenuBar.h"
 
 class NodeGui
 {
@@ -54,6 +58,8 @@ private:
     ImNodesContext* m_imnodes_context;
 
     ImVec4 m_bg_color;
+
+    MenuBar* m_menu_bar;
 
     NodeManager* m_node_manager;
 };

@@ -35,6 +35,9 @@ bool NodeGui::init()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
+    // Setup menu bar
+    this->m_menu_bar = new MenuBar();
+
     this->m_node_manager = new NodeManager();
 
     return true;
@@ -77,6 +80,17 @@ void NodeGui::loop()
         ImGui::SetNextWindowSize(ImVec2(this->m_win_width, this->m_win_height), ImGuiCond_Always);
         ImGui::SetNextWindowPos(ImVec2(0.f, 0.f));
         ImGui::Begin("NodeEditor", nullptr, ImGuiWindowFlags_MenuBar);
+
+        /////////////////////////
+        ///// Draw menu bar /////
+        /////////////////////////
+        this->m_menu_bar->draw();
+
+        /////////////////////
+        //// Draw nodes /////
+        /////////////////////
+        ImNodes::BeginNodeEditor();
+        ImNodes::EndNodeEditor();
 
         // End drawing window
         ImGui::End();
@@ -166,4 +180,6 @@ void NodeGui::setupImGui()
 
     // Set style
     ImGui::StyleColorsDark();
+    ImNodes::SetNodeGridSpacePos(1, ImVec2(200.f, 200.f));
+    ImNodes::PushAttributeFlag(ImNodesAttributeFlags_EnableLinkDetachWithDragClick);
 }

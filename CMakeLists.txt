@@ -57,6 +57,10 @@ include_directories((${MAIN_SRC_DIR}/node))
 set(NP_SOURCES
 	${MAIN_SRC_DIR}/main.cpp
 	${MAIN_SRC_DIR}/NodeGui.cpp
+	${MAIN_SRC_DIR}/MenuBar.cpp
+	${MAIN_SRC_DIR}/MenuItem_File.cpp
+	${MAIN_SRC_DIR}/MenuItem_ImageVideo.cpp
+	${MAIN_SRC_DIR}/MenuItem_Audio.cpp
 	${MAIN_SRC_DIR}/NodeManager.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp
 )

@@ -22,7 +22,31 @@ class NodeGui {
 
     -m_bg_color: ImVec4
 
+    -m_menu_bar: MenuBar*
+
     -m_node_manager: NodeManager*
+}
+
+class MenuBar {
+    +draw(): void
+
+    -m_menu_items: std::vector<MenuItem*>
+}
+
+abstract class MenuItem {
+    {abstract} #draw(): void
+}
+
+class MenuItem_File {
+    -draw(): void
+}
+
+class MenuItem_ImageVideo {
+    -draw(): void
+}
+
+class MenuItem_Audio {
+    -draw(): void
 }
 
 class NodeManager {
@@ -37,6 +61,13 @@ class Node {
 }
 
 NodeGui *-- NodeManager
+NodeGui *-- MenuBar
+
+MenuBar *-- MenuItem
+MenuItem <|-- MenuItem_File
+MenuItem <|-- MenuItem_ImageVideo
+MenuItem <|-- MenuItem_Audio
+
 NodeManager --> Node
 
 @enduml
