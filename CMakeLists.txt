@@ -62,6 +62,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/MenuItem_ImageVideo.cpp
 	${MAIN_SRC_DIR}/MenuItem_Audio.cpp
 	${MAIN_SRC_DIR}/NodeManager.cpp
+	${MAIN_SRC_DIR}/PinManager.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp
 )
 add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES})

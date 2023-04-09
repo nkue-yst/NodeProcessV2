@@ -25,6 +25,7 @@ class NodeGui {
     -m_menu_bar: MenuBar*
 
     -m_node_manager: NodeManager*
+    -m_pin_manager: PinManager*
 }
 
 class MenuBar {
@@ -50,7 +51,7 @@ class MenuItem_Audio {
 }
 
 class NodeManager {
-    +addNode(Node* node): void
+    +addNode(Node*): void
     +deleteNode(): void
 
     -m_node_list: std::vector<Node*>
@@ -60,7 +61,15 @@ class Node {
 
 }
 
+class PinManager {
+    +usePin(): uint32_t
+    +unusePin(uint32_t): void
+
+    -m_used_id: std::set<uint32_t>
+}
+
 NodeGui *-- NodeManager
+NodeGui *-- PinManager
 NodeGui *-- MenuBar
 
 MenuBar *-- MenuItem

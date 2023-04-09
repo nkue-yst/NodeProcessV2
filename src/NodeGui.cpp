@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 NodeGui::NodeGui()
     : m_win_width(1280)
@@ -22,7 +23,7 @@ NodeGui::~NodeGui()
 
 bool NodeGui::init()
 {
-    std::cout << "[INFO]: Initializing subsystems..." << std::endl;
+    std::cout << "[INFO]: Initializing components..." << std::endl;
 
     // Initialize SDL system
     SDL_Init(SDL_INIT_VIDEO);
@@ -40,9 +41,11 @@ bool NodeGui::init()
     // Setup menu bar
     this->m_menu_bar = new MenuBar();
 
+    // Setup components
     this->m_node_manager = new NodeManager();
+    this->m_pin_manager = new PinManager();
 
-    std::cout << "[INFO]: Subsystems initializaion complete." << std::endl;
+    std::cout << "[INFO]: Components initializaion complete." << std::endl;
 
     return true;
 }
@@ -127,7 +130,11 @@ void NodeGui::abort()
 
 void NodeGui::quit()
 {
-    std::cout << "[INFO]: Terminating subsystems..." << std::endl;
+    std::cout << "[INFO]: Terminating components..." << std::endl;
+
+    // Clean up components
+    delete this->m_menu_bar;
+    delete this->m_node_manager;
 
     // Clean up SDL
     SDL_DestroyRenderer(this->m_renderer);

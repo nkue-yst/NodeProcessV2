@@ -1,5 +1,8 @@
 {
     "plantuml.exportOutDir": ".",
     "plantuml.exportFormat": "png",
-    "plantuml.exportSubFolder": false
+    "plantuml.exportSubFolder": false,
+    "files.associations": {
+        "cstdint": "cpp"
+    }
 }

@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include "NodeManager.h"
-
 #include "SDL.h"
 #include "SDL_opengl.h"
 
@@ -17,6 +15,8 @@
 #include "imnodes.h"
 #include "ImGuiFileDialog.h"
 
+#include "NodeManager.h"
+#include "PinManager.h"
 #include "MenuBar.h"
 
 class NodeGui
@@ -62,4 +62,5 @@ private:
     MenuBar* m_menu_bar;
 
     NodeManager* m_node_manager;
+    PinManager* m_pin_manager;
 };

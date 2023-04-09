@@ -106,7 +106,7 @@ class PinManager {
     +usePin(): uint32_t
     +unusePin(uint32_t): void
 
-    -m_used_id: std::vector<uint32_t>
+    -m_used_id: std::set<uint32_t>
 }
 
 class Pin {
