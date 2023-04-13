@@ -4,6 +4,8 @@
  * Edited:  2023/04/09
  **********/
 
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -26,5 +28,6 @@ public:
     uint32_t m_id;
     std::string m_name;
 
+    std::vector<class Pin*> m_in_pins;
     std::vector<class Pin*> m_out_pins;
 };
