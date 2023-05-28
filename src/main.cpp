@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/04/05
+ * Edited:  2023/05/28
  **********/
 
 #include <memory>
@@ -29,5 +29,5 @@ int main(int argc, char** argv)
     ////////////////
     ///// Quit /////
     ////////////////
-    NodeGui::get().quit();
+    NodeGui::get().cleanup();
 }

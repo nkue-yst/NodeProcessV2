@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/04/05
+ * Edited:  2023/05/28
  **********/
 
 #include "NodeGui.h"
@@ -13,6 +13,8 @@
 bool NodeGui::init()
 {
     std::cout << "[INFO]: Initializing components..." << std::endl;
+
+    this->m_done = false;
 
     this->m_win_width = 1280;
     this->m_win_height = 720;
@@ -49,8 +51,7 @@ void NodeGui::loop()
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Build();
 
-    bool done = false;
-    while (!done)
+    while (!this->m_done)
     {
         // Process terminate input
         SDL_Event ev;
@@ -60,11 +61,11 @@ void NodeGui::loop()
 
             if (ev.type == SDL_QUIT)
             {
-                done = true;
+                this->m_done = true;
             }
             else if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_CLOSE && ev.window.windowID == SDL_GetWindowID(this->m_win))
             {
-                done = true;
+                this->m_done = true;
             }
         }
 
@@ -115,7 +116,7 @@ void NodeGui::loop()
 
 void NodeGui::abort()
 {
-    this->quit();
+    this->cleanup();
 
     std::cerr << "[ERROR]: An error occurred and the program will now terminate." << std::endl;
     std::exit(1);
@@ -123,7 +124,12 @@ void NodeGui::abort()
 
 void NodeGui::quit()
 {
-    std::cout << "[INFO]: Terminating components..." << std::endl;
+    this->m_done = true;
+}
+
+void NodeGui::cleanup()
+{
+    std::cout << "[INFO]: Clean up components..." << std::endl;
 
     // Clean up components
     delete this->m_menu_bar;

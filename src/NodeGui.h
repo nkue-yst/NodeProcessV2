@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/04/05
+ * Edited:  2023/05/28
  **********/
 
 #pragma once
@@ -49,8 +49,11 @@ public:
     // Error and quit
     void abort();
 
-    // Normal termination
+    // Set quit flag
     void quit();
+
+    // Cleanup for normal termination
+    void cleanup();
 
     // Create main editor window
     void createWindow();
@@ -62,6 +65,8 @@ public:
     void setupImGui();
 
 private:
+    bool m_done;
+
     int32_t m_win_width;
     int32_t m_win_height;
 

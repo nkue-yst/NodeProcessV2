@@ -3,6 +3,7 @@
     "plantuml.exportFormat": "png",
     "plantuml.exportSubFolder": false,
     "files.associations": {
-        "cstdint": "cpp"
+        "cstdint": "cpp",
+        "ostream": "cpp"
     }
 }

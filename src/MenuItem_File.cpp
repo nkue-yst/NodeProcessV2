@@ -1,12 +1,14 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/04/09
+ * Edited:  2023/05/28
  **********/
 
 #include "MenuItem_File.h"
 
 #include "imgui.h"
+
+#include "NodeGui.h"
 
 void MenuItem_File::draw()
 {
@@ -31,7 +33,7 @@ void MenuItem_File::draw()
         // Exit button
         if (ImGui::MenuItem("Exit"))
         {
-
+            NodeGui::get().quit();
         }
 
         ImGui::EndMenu();
