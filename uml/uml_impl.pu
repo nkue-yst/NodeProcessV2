@@ -70,6 +70,20 @@ abstract class Node {
     +m_out_pins: std::vector<Pin*>
 }
 
+abstract class MediaNode {
+    {abstract} +loadData(const char* file_path): bool
+
+    #m_content: Media*
+}
+
+class ImageNode {
+    -drawContent(): void
+    -loadData(const char* file_path): bool
+
+    -m_width: int32_t
+    -m_height: int32_t
+}
+
 class PinManager {
     +usePin(): uint32_t
     +unusePin(uint32_t): void
@@ -84,6 +98,16 @@ class Pin {
     +m_connected_nodes: std::vector<Node*>
 }
 
+abstract class Media {
+    {abstract} +draw(): void
+}
+
+class Image {
+    +draw(): void
+
+    +m_data: cv::Mat
+}
+
 NodeGui *-- NodeManager
 NodeGui *-- PinManager
 NodeGui *-- MenuBar
@@ -93,7 +117,12 @@ MenuItem <|-- MenuItem_File
 MenuItem <|-- MenuItem_ImageVideo
 MenuItem <|-- MenuItem_Audio
 
+Node <|-- MediaNode
 Node *-- Pin
+MediaNode <|-- ImageNode
+
+MediaNode *--- Media
+Media <|-- Image
 
 NodeManager --> Node
 PinManager <-- Pin

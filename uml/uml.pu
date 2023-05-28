@@ -72,7 +72,9 @@ abstract class Node {
 }
 
 abstract class MediaNode {
-    #content: Media*
+    {abstract} +loadData(const char* file_path): bool
+
+    #m_content: Media*
 }
 
 abstract class ProcessNode {
@@ -81,6 +83,10 @@ abstract class ProcessNode {
 
 class ImageNode {
     -drawContent(): void
+    -loadData(const char* file_path): bool
+
+    -m_width: int32_t
+    -m_height: int32_t
 }
 
 class VideoNode {
@@ -118,19 +124,21 @@ class Pin {
 }
 
 abstract class Media {
-
+    {abstract} +draw(): void
 }
 
 class Image {
-
+    +draw(): void
+    
+    +m_data: cv::Mat
 }
 
 class Video {
-
+    +draw(): void
 }
 
 class Audio {
-
+    +draw(): void
 }
 
 NodeGui *-- NodeManager
