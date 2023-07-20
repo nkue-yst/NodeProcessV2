@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/04/09
+ * Edited:  2023/07/21
  **********/
 
 #pragma once
@@ -30,4 +30,6 @@ public:
 
     std::vector<class Pin*> m_in_pins;
     std::vector<class Pin*> m_out_pins;
+
+    bool m_need_update;
 };

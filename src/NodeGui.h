@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/05/28
+ * Edited:  2023/07/18
  **********/
 
 #pragma once
@@ -37,8 +37,6 @@ public:
         static NodeGui instance_;
         return instance_;
     }
-
-    PinManager& getPinManager() const { return *this->m_pin_manager; }
 
     // Initialize systems
     bool init();
@@ -81,6 +79,7 @@ private:
 
     MenuBar* m_menu_bar;
 
+public:
     NodeManager* m_node_manager;
     PinManager* m_pin_manager;
 };

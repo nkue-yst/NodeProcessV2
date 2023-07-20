@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/05/28
+ * Edited:  2023/07/20
  **********/
 
 #include "NodeGui.h"
@@ -91,6 +91,7 @@ void NodeGui::loop()
         //// Draw nodes /////
         /////////////////////
         ImNodes::BeginNodeEditor();
+        this->m_node_manager->drawAll();
         ImNodes::EndNodeEditor();
 
         // End drawing window

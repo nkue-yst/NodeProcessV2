@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/04/09
+ * Edited:  2023/07/21
  **********/
 
 #include "Node.h"
@@ -13,6 +13,7 @@
 Node::Node()
     : m_id(0)
     , m_name("none")
+    , m_need_update(true)
 {
 }
 
@@ -50,7 +51,7 @@ void Node::drawInPins()
     for (auto pin : this->m_in_pins)
     {
         ImNodes::BeginInputAttribute(pin->m_id);
-        ImGui::TextUnformatted(pin->m_name);
+        ImGui::TextUnformatted(pin->m_name.c_str());
         ImNodes::EndInputAttribute();
     }
 }
@@ -60,7 +61,7 @@ void Node::drawOutPins()
     for (auto pin : this->m_out_pins)
     {
         ImNodes::BeginOutputAttribute(pin->m_id);
-        ImGui::TextUnformatted(pin->m_name);
+        ImGui::TextUnformatted(pin->m_name.c_str());
         ImNodes::EndOutputAttribute();
     }
 }

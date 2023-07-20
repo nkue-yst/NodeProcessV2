@@ -1,12 +1,15 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/04/09
+ * Edited:  2023/07/18
  **********/
 
 #include "MenuItem_ImageVideo.h"
 
 #include "imgui.h"
+
+#include "NodeGui.h"
+#include "ImageNode.h"
 
 void MenuItem_ImageVideo::draw()
 {
@@ -15,7 +18,9 @@ void MenuItem_ImageVideo::draw()
         // Create new ImageNode
         if (ImGui::MenuItem("ImageSource"))
         {
+            Node* new_node = new ImageNode("../sample/sample1.png");
 
+            NodeGui::get().m_node_manager->addNode(new_node);
         }
 
         // Create new VideoNode

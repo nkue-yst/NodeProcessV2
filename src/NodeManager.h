@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/06
- * Edited:  2023/04/08
+ * Edited:  2023/07/20
  **********/
 
 #include <vector>
@@ -14,6 +14,8 @@ public:
 
     void addNode(class Node* node);
     void deleteNode();
+
+    void drawAll();
 
 private:
     std::vector<class Node*> m_node_list;
