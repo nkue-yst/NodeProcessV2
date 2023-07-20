@@ -8,8 +8,9 @@
 
 #include "NodeGui.h"
 
-Pin::Pin(std::string name)
+Pin::Pin(Pin::Type type, std::string name)
     : m_name(name)
+    , m_type(type)
 {
     this->m_id = NodeGui::get().m_pin_manager->usePin();
 }
