@@ -22,7 +22,7 @@ ImageNode::ImageNode(std::string file_path)
     ///////////////////////////
     ///// Initialize Pins /////
     ///////////////////////////
-    Pin* new_pin = new Pin("Color");
+    Pin* new_pin = new Pin("RGB");
     this->m_out_pins.push_back(new_pin);
 
     if (!this->loadData(file_path))

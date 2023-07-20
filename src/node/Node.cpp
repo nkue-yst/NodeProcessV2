@@ -12,7 +12,7 @@
 
 Node::Node()
     : m_id(0)
-    , m_name("none")
+    , m_name("undefined")
     , m_need_update(true)
 {
 }
@@ -31,17 +31,18 @@ void Node::draw()
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted(this->m_name.c_str());
     ImNodes::EndNodeTitleBar();
+    
+    /////////////////////////////
+    ///// Draw node content /////
+    /////////////////////////////
+    this->drawContent();
+    ImGui::Dummy(ImVec2(0.f, 10.f));
 
     /////////////////////
     ///// Draw pins /////
     /////////////////////
     this->drawInPins();
     this->drawOutPins();
-
-    /////////////////////////////
-    ///// Draw node content /////
-    /////////////////////////////
-    this->drawContent();
 
     ImNodes::EndNode();
 }
@@ -61,6 +62,8 @@ void Node::drawOutPins()
     for (auto pin : this->m_out_pins)
     {
         ImNodes::BeginOutputAttribute(pin->m_id);
+        const float label_width = ImGui::CalcTextSize(pin->m_name.c_str()).x;
+        ImGui::Indent(95.f - label_width);
         ImGui::TextUnformatted(pin->m_name.c_str());
         ImNodes::EndOutputAttribute();
     }
