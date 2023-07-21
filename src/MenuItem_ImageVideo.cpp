@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/18
+ * Edited:  2023/07/21
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -9,6 +9,7 @@
 #include "imgui.h"
 
 #include "NodeGui.h"
+#include "GrayScallingNode.h"
 #include "ImageNode.h"
 
 void MenuItem_ImageVideo::draw()
@@ -23,32 +24,16 @@ void MenuItem_ImageVideo::draw()
             NodeGui::get().m_node_manager->addNode(new_node);
         }
 
-        // Create new VideoNode
-        if (ImGui::MenuItem("VideoSource"))
-        {
-
-        }
-
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
 
-        // Create new BinariztionNode
-        if (ImGui::MenuItem("Binarization"))
-        {
-
-        }
-
-        // Create new EdgeDetectionNode
-        if (ImGui::MenuItem("EdgeDetection"))
-        {
-
-        }
-
         // Create new GrayScalingNode
         if (ImGui::MenuItem("GrayScaling"))
         {
+            Node* new_node = new GrayScallingNode();
 
+            NodeGui::get().m_node_manager->addNode(new_node);
         }
 
         ImGui::EndMenu();

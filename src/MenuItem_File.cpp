@@ -1,13 +1,15 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/05/28
+ * Edited:  2023/07/21
  **********/
 
 #include "MenuItem_File.h"
 
 #include "imgui.h"
 
+#include "ImageNode.h"
+#include "Node.h"
 #include "NodeGui.h"
 
 void MenuItem_File::draw()
@@ -17,7 +19,9 @@ void MenuItem_File::draw()
         // Open dialog to select image file
         if (ImGui::MenuItem("Open Image File"))
         {
+            Node* new_node = new ImageNode("../sample/sample1.png");
 
+            NodeGui::get().m_node_manager->addNode(new_node);
         }
 
         // Open dialog to select video file

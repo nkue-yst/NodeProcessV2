@@ -31,34 +31,26 @@ ImageNode::ImageNode(std::string file_path)
     }
 }
 
+NodeContent& ImageNode::getContent(Pin::Type pin_type)
+{
+    NodeContent* content = new NodeContent();
+
+    if (pin_type == Pin::Type::RGB)
+    {
+        content->m_cv_mat = this->m_image;
+    }
+
+    return *content;
+}
+
 void ImageNode::drawContent()
 {
-    auto convert_func = [](cv::Mat* mat) -> GLuint
-    {
-        GLuint texture_id;
-
-        glGenTextures(1, &texture_id);
-        glBindTexture(GL_TEXTURE_2D, texture_id);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-        cv::cvtColor((*mat), (*mat), cv::COLOR_RGB2BGR);
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (*mat).cols, (*mat).rows, 0, GL_RGB, GL_UNSIGNED_BYTE, (*mat).ptr());
-
-        return texture_id;
-    };
-
     if (this->m_need_update)
     {
         glDeleteTextures(1, &this->m_gl_texture);
         this->m_gl_texture = convert_func(&this->m_image);
 
-        this->m_need_update ^= 1;
+        this->m_need_update = false;
     }
 
     ImGui::Image((void*)(uintptr_t)this->m_gl_texture, ImVec2(this->m_width, this->m_height));
@@ -80,6 +72,8 @@ bool ImageNode::loadData(std::string file_path)
     float resize_rate = 100.f / std::max(this->m_width, this->m_height);
     this->m_width *= resize_rate;
     this->m_height *= resize_rate;
+
+    this->m_need_update = true;
 
     return true;
 }

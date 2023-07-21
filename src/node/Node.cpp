@@ -8,12 +8,10 @@
 
 #include "imnodes.h"
 
-#include "Pin.h"
-
 Node::Node()
     : m_id(0)
     , m_name("undefined")
-    , m_need_update(true)
+    , m_need_update(false)
 {
 }
 

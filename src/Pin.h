@@ -4,6 +4,9 @@
  * Edited:  2023/07/21
  **********/
 
+#ifndef __PIN_H__
+#define __PIN_H__
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -37,3 +40,5 @@ public:
 
     std::vector<class Node*> m_connected_nodes;
 };
+
+#endif

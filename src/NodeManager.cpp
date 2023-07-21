@@ -23,6 +23,7 @@ NodeManager::~NodeManager()
 
 void NodeManager::addNode(Node* node)
 {
+    node->m_id = this->m_node_list.size();
     this->m_node_list.push_back(node);
 }
 
