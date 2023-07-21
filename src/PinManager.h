@@ -38,6 +38,27 @@ public:
         return (pin != this->m_pins.end()) ? *pin : nullptr;
     }
 
+    Pin* getPair(int32_t id)
+    {
+        Pin* pair_pin = nullptr;
+
+        for (auto link : this->m_links)
+        {
+            if (link.first == id)
+            {
+                pair_pin = this->getPin(link.second);
+                break;
+            }
+            else if (link.second == id)
+            {
+                pair_pin = this->getPin(link.first);
+                break;
+            }
+        }
+
+        return pair_pin;
+    }
+
     void addLink(std::pair<int32_t, int32_t> new_link)
     {
         ///////////////////////////

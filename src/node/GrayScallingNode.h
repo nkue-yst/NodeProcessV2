@@ -7,12 +7,14 @@
 #ifndef __GRAY_SCALLING_H__
 #define __GRAY_SCALLING_H__
 
-#include "ProcessingNode.h"
+#include "GraphicsProcessingNode.h"
 
-class GrayScallingNode : public ProcessingNode
+class GrayScallingNode : public GraphicsProcessingNode
 {
 public:
     GrayScallingNode();
+
+    cv::Mat getContent(Pin::Type pin_type) override;
 
 protected:
     void drawContent() override;

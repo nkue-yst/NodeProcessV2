@@ -70,11 +70,5 @@ public:
     std::vector<class Pin*> m_in_pins;
     std::vector<class Pin*> m_out_pins;
 
-    cv::Mat m_image;
-    GLuint m_gl_texture;
-
-    int32_t m_width  = 100;
-    int32_t m_height = 100;
-
     bool m_need_update;
 };

@@ -18,7 +18,7 @@ enum class LogType
 };
 
 // 簡易ログ出力関数
-void log(LogType type, std::string message)
+static void log(LogType type, std::string message)
 {
     std::string type_str;
 

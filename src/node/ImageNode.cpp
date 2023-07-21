@@ -10,6 +10,7 @@
 #include "imnodes.h"
 #include <opencv2/opencv.hpp>
 
+#include "Log.h"
 #include "NodeGui.h"
 #include "Pin.h"
 
@@ -34,8 +35,25 @@ ImageNode::ImageNode(std::string file_path)
     ///////////////////////////
     if (!this->loadData(file_path))
     {
-        std::cerr << "[INFO]: Failed to load: \"" << file_path << "\"" << std::endl;
+        log(LogType::WARNING, "Failed to load: \"" + file_path + "\"");
     }
+}
+
+cv::Mat ImageNode::getContent(Pin::Type pin_type)
+{
+    cv::Mat content;
+
+    if (pin_type == Pin::Type::RGB)
+    {
+        content = this->m_image;
+    }
+    else
+    {
+        log(LogType::ERROR, "Wrong type of pin connected.");
+        NodeGui::get().abort();
+    }
+
+    return content;
 }
 
 void ImageNode::drawContent()

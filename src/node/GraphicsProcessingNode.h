@@ -7,9 +7,10 @@
 #ifndef __PROCESSING_NODE_H__
 #define __PROSESSING_NODE_H__
 
+#include "GraphicsNode.h"
 #include "Node.h"
 
-class ProcessingNode : public Node
+class GraphicsProcessingNode : public GraphicsNode
 {
 protected:
     virtual void process() = 0;
