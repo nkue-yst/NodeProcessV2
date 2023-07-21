@@ -9,7 +9,9 @@
 #include <string>
 #include <vector>
 
-#include "NodeContent.h"
+#include "GL/gl.h"
+#include "opencv2/opencv.hpp"
+
 #include "Pin.h"
 
 class Node
@@ -19,8 +21,6 @@ public:
     ~Node();
 
     void draw();
-
-    virtual NodeContent& getContent(Pin::Type pin_type) = 0;
 
     // cv::MatからGLuintへの変換
     static GLuint convert_func(cv::Mat* mat)

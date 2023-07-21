@@ -11,19 +11,6 @@
 
 class ProcessingNode : public Node
 {
-public:
-    NodeContent& getContent(Pin::Type pin_type) override
-    {
-        NodeContent* content = new NodeContent();
-
-        if (pin_type == Pin::Type::RGB)
-        {
-            content->m_cv_mat = this->m_image;
-        }
-
-        return *content;
-    }
-
 protected:
     virtual void process() = 0;
 };

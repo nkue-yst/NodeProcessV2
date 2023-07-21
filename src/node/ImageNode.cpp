@@ -38,18 +38,6 @@ ImageNode::ImageNode(std::string file_path)
     }
 }
 
-NodeContent& ImageNode::getContent(Pin::Type pin_type)
-{
-    NodeContent* content = new NodeContent();
-
-    if (pin_type == Pin::Type::RGB)
-    {
-        content->m_cv_mat = this->m_image;
-    }
-
-    return *content;
-}
-
 void ImageNode::drawContent()
 {
     if (this->m_need_update)

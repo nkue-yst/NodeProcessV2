@@ -14,8 +14,6 @@ class ImageNode : public MediaNode
 public:
     ImageNode(std::string file_path);
 
-    NodeContent& getContent(Pin::Type pin_type) override;
-
 private:
     void drawContent() override;
     bool loadData(std::string file_path) override;
