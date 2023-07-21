@@ -10,6 +10,7 @@
 #include "imnodes.h"
 #include <opencv2/opencv.hpp>
 
+#include "NodeGui.h"
 #include "Pin.h"
 
 ImageNode::ImageNode(std::string file_path)
@@ -22,9 +23,15 @@ ImageNode::ImageNode(std::string file_path)
     ///////////////////////////
     ///// Initialize Pins /////
     ///////////////////////////
-    Pin* new_pin = new Pin(Pin::Type::RGB, "RGB");
+    Pin* new_pin = nullptr;
+
+    // Output pins
+    new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::RGB, "RGB");
     this->m_out_pins.push_back(new_pin);
 
+    ///////////////////////////
+    ///// Load image data /////
+    ///////////////////////////
     if (!this->loadData(file_path))
     {
         std::cerr << "[INFO]: Failed to load: \"" << file_path << "\"" << std::endl;

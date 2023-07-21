@@ -6,13 +6,15 @@
 
 #include "Pin.h"
 
+#include "Node.h"
 #include "NodeGui.h"
 
-Pin::Pin(Pin::Type type, std::string name)
-    : m_name(name)
+Pin::Pin(Node* owner, int32_t id, Pin::Type type, std::string name)
+    : m_id(id)
+    , m_name(name)
     , m_type(type)
+    , m_owner(owner)
 {
-    this->m_id = NodeGui::get().m_pin_manager->usePin();
 }
 
 Pin::~Pin()

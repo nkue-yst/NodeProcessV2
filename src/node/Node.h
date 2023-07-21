@@ -23,7 +23,7 @@ public:
     virtual NodeContent& getContent(Pin::Type pin_type) = 0;
 
     // cv::MatからGLuintへの変換
-    inline static GLuint convert_func(cv::Mat* mat)
+    static GLuint convert_func(cv::Mat* mat)
     {
         GLuint texture_id;
 
@@ -42,6 +42,19 @@ public:
 
         return texture_id;
     };
+
+    void setDirtyFlag()
+    {
+        this->m_need_update = true;
+
+        for (Pin* pin : m_out_pins)
+        {
+            for (Node* node : pin->m_connected_nodes)
+            {
+                node->setDirtyFlag();
+            }
+        }
+    }
 
 private:
     void drawInPins();

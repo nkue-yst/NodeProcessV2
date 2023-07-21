@@ -1,14 +1,15 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/20
+ * Edited:  2023/07/21
  **********/
 
 #include "NodeGui.h"
 
 #include <cstdlib>
-#include <iostream>
 #include <memory>
+
+#include "Node.h"
 
 bool NodeGui::init()
 {
@@ -87,11 +88,45 @@ void NodeGui::loop()
         /////////////////////////
         this->m_menu_bar->draw();
 
+        ////////////////////////
+        ///// Update links /////
+        ////////////////////////
+        int32_t start_id, end_id;
+
+        // New created link
+        if (ImNodes::IsLinkCreated(&start_id, &end_id))
+        {
+            // Add new link to list
+            this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
+
+            // Set dirty flag for all child nodes
+            std::vector<Node*> node_list = this->m_pin_manager->getPin(start_id)->m_connected_nodes;
+            for (Node* node : node_list)
+            {
+                node->setDirtyFlag();
+            }
+        }
+
+        // Begin drawing node editor
+        ImNodes::BeginNodeEditor();
+
         /////////////////////
         //// Draw nodes /////
         /////////////////////
-        ImNodes::BeginNodeEditor();
         this->m_node_manager->drawAll();
+
+        //////////////////////
+        ///// Draw links /////
+        //////////////////////
+        int32_t link_num = this->m_pin_manager->m_links.size();
+        for (int32_t i = 0; i < link_num; ++i)
+        {
+            const std::pair<int32_t, int32_t> link = this->m_pin_manager->m_links.at(i);
+            
+            ImNodes::Link(i, link.first, link.second);
+        }
+
+        // End drawing node editor
         ImNodes::EndNodeEditor();
 
         // End drawing window

@@ -8,6 +8,8 @@
 
 #include "imgui.h"
 
+#include "NodeGui.h"
+
 GrayScallingNode::GrayScallingNode()
 {
     ///////////////////////////
@@ -19,17 +21,22 @@ GrayScallingNode::GrayScallingNode()
     ///// Initialize Pins /////
     ///////////////////////////
     Pin* new_pin = nullptr;
-    new_pin = new Pin(Pin::Type::RGB, "Input");
+
+    // Input pins
+    new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::RGB, "Input");
     this->m_in_pins.push_back(new_pin);
 
-    new_pin = new Pin(Pin::Type::RGB, "RGB");
+    // Output pins
+    new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::RGB, "RGB");
     this->m_out_pins.push_back(new_pin);
-}
+    }
 
 void GrayScallingNode::drawContent()
 {
     if (this->m_need_update)
     {
+        this->m_image = this->m_in_pins.at(0)->m_connected_nodes.at(0)->m_image;
+
         this->process();
 
         glDeleteTextures(1, &this->m_gl_texture);
@@ -43,5 +50,8 @@ void GrayScallingNode::drawContent()
 
 void GrayScallingNode::process()
 {
-    cv::cvtColor(this->m_image, this->m_image, cv::COLOR_BGR2GRAY);
+    if (!this->m_image.empty())
+    {
+        cv::cvtColor(this->m_image, this->m_image, cv::COLOR_BGR2GRAY);
+    }
 }

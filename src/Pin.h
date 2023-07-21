@@ -21,7 +21,7 @@ public:
         UNDEFINED    // 未定義
     };
 
-    Pin(Type type, std::string name);
+    Pin(class Node* owner, int32_t id, Type type, std::string name);
     ~Pin();
 
     bool operator==(const Type rhs) const
@@ -34,11 +34,13 @@ public:
         return this->m_type != rhs;
     }
 
-    uint32_t m_id;
+    int32_t m_id;
     std::string m_name;
     Type m_type;
 
     std::vector<class Node*> m_connected_nodes;
+
+    class Node* m_owner;
 };
 
 #endif

@@ -18,7 +18,7 @@ public:
 
         if (pin_type == Pin::Type::RGB)
         {
-
+            content->m_cv_mat = this->m_image;
         }
 
         return *content;
