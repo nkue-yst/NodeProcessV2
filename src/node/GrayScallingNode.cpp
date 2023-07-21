@@ -43,5 +43,5 @@ void GrayScallingNode::drawContent()
 
 void GrayScallingNode::process()
 {
-
+    cv::cvtColor(this->m_image, this->m_image, cv::COLOR_BGR2GRAY);
 }
