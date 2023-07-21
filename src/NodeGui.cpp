@@ -9,11 +9,12 @@
 #include <cstdlib>
 #include <memory>
 
+#include "Log.h"
 #include "Node.h"
 
 bool NodeGui::init()
 {
-    std::cout << "[INFO]: Initializing components..." << std::endl;
+    log(LogType::LOG, "Initializing components...");
 
     this->m_done = false;
 
@@ -41,7 +42,7 @@ bool NodeGui::init()
     this->m_node_manager = new NodeManager();
     this->m_pin_manager = new PinManager();
 
-    std::cout << "[INFO]: Components initializaion complete." << std::endl;
+    log(LogType::LOG, "Components initialization complete.");
 
     return true;
 }
@@ -154,7 +155,7 @@ void NodeGui::abort()
 {
     this->cleanup();
 
-    std::cerr << "[ERROR]: An error occurred and the program will now terminate." << std::endl;
+    log(LogType::ERROR, "An error occurred and the program will now terminate.");
     std::exit(1);
 }
 
@@ -165,7 +166,7 @@ void NodeGui::quit()
 
 void NodeGui::cleanup()
 {
-    std::cout << "[INFO]: Clean up components..." << std::endl;
+    log(LogType::LOG, "Clean up components...");
 
     // Clean up components
     delete this->m_menu_bar;
