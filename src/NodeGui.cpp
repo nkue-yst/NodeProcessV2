@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/21
+ * Edited:  2023/07/22
  **********/
 
 #include "NodeGui.h"
@@ -25,7 +25,9 @@ bool NodeGui::init()
     // Initialize SDL system
     SDL_Init(SDL_INIT_VIDEO);
 
-    // Initialize OpenGL
+    /////////////////////////////
+    ///// Initialize OpenGL /////
+    /////////////////////////////
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -53,9 +55,14 @@ void NodeGui::loop()
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Build();
 
+    /////////////////////
+    ///// Main loop /////
+    /////////////////////
     while (!this->m_done)
     {
-        // Process terminate input
+        ///////////////////////////////////
+        ///// Process terminate input /////
+        ///////////////////////////////////
         SDL_Event ev;
         while (SDL_PollEvent(&ev))
         {
@@ -65,7 +72,11 @@ void NodeGui::loop()
             {
                 this->m_done = true;
             }
-            else if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_CLOSE && ev.window.windowID == SDL_GetWindowID(this->m_win))
+            else if (
+                ev.type == SDL_WINDOWEVENT &&
+                ev.window.event == SDL_WINDOWEVENT_CLOSE &&
+                ev.window.windowID == SDL_GetWindowID(this->m_win)
+            )
             {
                 this->m_done = true;
             }
@@ -74,12 +85,16 @@ void NodeGui::loop()
         // Update main window size
         SDL_GetWindowSize(this->m_win, &this->m_win_width, &this->m_win_height);
 
-        // Start new ImGui frame
+        /////////////////////////////////
+        ///// Start new ImGui frame /////
+        /////////////////////////////////
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
 
-        // Start drawing window
+        ////////////////////////////////
+        ///// Start drawing window /////
+        ////////////////////////////////
         ImGui::SetNextWindowSize(ImVec2(this->m_win_width, this->m_win_height), ImGuiCond_Always);
         ImGui::SetNextWindowPos(ImVec2(0.f, 0.f));
         ImGui::Begin("NodeEditor", nullptr, ImGuiWindowFlags_MenuBar);
@@ -92,23 +107,41 @@ void NodeGui::loop()
         ////////////////////////
         ///// Update links /////
         ////////////////////////
-        int32_t start_id, end_id;
-
-        // New created link
-        if (ImNodes::IsLinkCreated(&start_id, &end_id))
         {
-            // Add new link to list
-            this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
 
-            // Set dirty flag for all child nodes
-            std::vector<Node*> node_list = this->m_pin_manager->getPin(start_id)->m_connected_nodes;
-            for (Node* node : node_list)
+            int32_t start_id, end_id;
+
+            // New created link
+            if (ImNodes::IsLinkCreated(&start_id, &end_id))
             {
-                node->setDirtyFlag();
+                // Add new link to list
+                this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
+
+                // Set dirty flag for all child nodes
+                std::vector<Node*> node_list = this->m_pin_manager->getPin(start_id)->m_connected_nodes;
+                for (Node* node : node_list)
+                {
+                    node->setDirtyFlag();
+                }
             }
+
+            // Disconnect link
+            int32_t link_id;
+            if (ImNodes::IsLinkDestroyed(&link_id))
+            {
+                // Disable disconnected link
+                this->m_pin_manager->getLinkedId(link_id, &start_id, &end_id);
+                this->m_pin_manager->disableLink(link_id);
+
+                // Set dirty flag for all child nodes
+                this->m_pin_manager->getPin(end_id)->m_owner->setDirtyFlag();
+            }
+
         }
 
-        // Begin drawing node editor
+        /////////////////////////////////////
+        ///// Begin drawing node editor /////
+        /////////////////////////////////////
         ImNodes::BeginNodeEditor();
 
         /////////////////////
@@ -123,14 +156,17 @@ void NodeGui::loop()
         for (int32_t i = 0; i < link_num; ++i)
         {
             const std::pair<int32_t, int32_t> link = this->m_pin_manager->m_links.at(i);
-            
-            ImNodes::Link(i, link.first, link.second);
+
+            if (Link::isValid(link))
+            {
+                ImNodes::Link(i, link.first, link.second);
+            }
         }
 
-        // End drawing node editor
+        ///////////////////////
+        ///// End drawing /////
+        ///////////////////////
         ImNodes::EndNodeEditor();
-
-        // End drawing window
         ImGui::End();
 
         /////////////////

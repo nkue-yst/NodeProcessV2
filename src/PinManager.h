@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/07/22
  **********/
 
 #include <algorithm>
@@ -12,6 +12,15 @@
 
 #include "Node.h"
 #include "Pin.h"
+
+struct Link
+{
+public:
+    static bool isValid(std::pair<int32_t, int32_t> link)
+    {
+        return !(link.first < 0 && link.second < 0);
+    }
+};
 
 class PinManager
 {
@@ -75,6 +84,18 @@ public:
 
         // Add to list
         this->m_links.push_back(new_link);
+    }
+
+    void disableLink(const int32_t link_id)
+    {
+        this->m_links.at(link_id).first  = -1;
+        this->m_links.at(link_id).second = -1;
+    }
+
+    void getLinkedId(const int32_t link_id, int32_t *start_id, int32_t *end_id)
+    {
+        *start_id = this->m_links.at(link_id).first;
+        *end_id = this->m_links.at(link_id).second;
     }
 
     std::vector<Pin*> m_pins;                            // Pin list

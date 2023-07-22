@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/21
- * Edited:  2023/07/21
+ * Edited:  2023/07/22
  **********/
 
 #include "GrayScallingNode.h"
@@ -54,12 +54,21 @@ void GrayScallingNode::drawContent()
     if (this->m_need_update)
     {
         Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);    // Connected pin
-        GraphicsNode* connected_node = dynamic_cast<GraphicsNode*>(pair_pin->m_owner);         // Connected node
 
-        if (connected_node)
+        if (pair_pin)
         {
-            this->m_image = connected_node->getContent(Pin::Type::RGB);
+            GraphicsNode* connected_node = dynamic_cast<GraphicsNode*>(pair_pin->m_owner);         // Connected node
+
+            if (connected_node)    // If the connected node is valid
+            {
+                this->m_image = connected_node->getContent(Pin::Type::RGB);
+            }
         }
+        else
+        {
+            this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
+        }
+
 
         this->process();
 
