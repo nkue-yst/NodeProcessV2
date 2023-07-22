@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/07/22
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -19,9 +19,8 @@ void MenuItem_ImageVideo::draw()
         // Create new ImageNode
         if (ImGui::MenuItem("ImageSource"))
         {
-            Node* new_node = new ImageNode("../sample/sample1.png");
-
-            NodeGui::get().m_node_manager->addNode(new_node);
+            const char* filters = "Image files (*.png *.jpg *.jpeg){.png,.jpg,.jpeg}";
+            ImGuiFileDialog::Instance()->OpenDialog("SelectImageDlgkey", "Select Image File", filters, ".");
         }
 
         ImGui::Spacing();

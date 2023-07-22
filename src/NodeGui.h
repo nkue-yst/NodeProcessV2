@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/18
+ * Edited:  2023/07/22
  **********/
 
 #pragma once
@@ -15,6 +15,7 @@
 #include "imnodes.h"
 #include "ImGuiFileDialog.h"
 
+#include "FileDialog.h"
 #include "NodeManager.h"
 #include "PinManager.h"
 #include "MenuBar.h"
@@ -65,9 +66,6 @@ public:
 private:
     bool m_done;
 
-    int32_t m_win_width;
-    int32_t m_win_height;
-
     SDL_Window* m_win;
     SDL_GLContext m_gl_context;
     SDL_Renderer* m_renderer;
@@ -79,7 +77,12 @@ private:
 
     MenuBar* m_menu_bar;
 
+    FileDialog* m_file_dialog;
+
 public:
+    int32_t m_win_width;
+    int32_t m_win_height;
+
     NodeManager* m_node_manager;
     PinManager* m_pin_manager;
 };

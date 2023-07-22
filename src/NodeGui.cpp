@@ -37,10 +37,15 @@ bool NodeGui::init()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-    // Setup menu bar
+    //////////////////////
+    ///// Setup menu /////
+    //////////////////////
     this->m_menu_bar = new MenuBar();
+    this->m_file_dialog = new FileDialog();
 
-    // Setup components
+    ////////////////////////////
+    ///// Setup components /////
+    ////////////////////////////
     this->m_node_manager = new NodeManager();
     this->m_pin_manager = new PinManager();
 
@@ -103,6 +108,11 @@ void NodeGui::loop()
         ///// Draw menu bar /////
         /////////////////////////
         this->m_menu_bar->draw();
+
+        ////////////////////////////
+        ///// Draw file dialog /////
+        ////////////////////////////
+        this->m_file_dialog->draw();
 
         ////////////////////////
         ///// Update links /////

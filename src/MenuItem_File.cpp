@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/07/22
  **********/
 
 #include "MenuItem_File.h"
@@ -19,9 +19,8 @@ void MenuItem_File::draw()
         // Open dialog to select image file
         if (ImGui::MenuItem("Open Image File"))
         {
-            Node* new_node = new ImageNode("../sample/sample1.png");
-
-            NodeGui::get().m_node_manager->addNode(new_node);
+            const char* filters = "Image files (*.png *.jpg *.jpeg){.png,.jpg,.jpeg}";
+            ImGuiFileDialog::Instance()->OpenDialog("SelectImageDlgkey", "Select Image File", filters, ".");
         }
 
         // Open dialog to select video file
