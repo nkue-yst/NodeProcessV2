@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #include "Node.h"
@@ -14,6 +14,7 @@
 Node::Node()
     : m_id(0)
     , m_name("undefined")
+    , m_priority(-1)
     , m_need_update(false)
 {
 }
@@ -48,15 +49,22 @@ void Node::draw()
     ImNodes::EndNode();
 }
 
-void Node::setDirtyFlag()
+void Node::setDirtyFlag(int32_t new_priority)
 {
+    //DEBUG("Set update flag. (node id: " + std::to_string(this->m_id) + ", node name: " + this->m_name + ")");
+
     this->m_need_update = true;
 
-    for (Pin* pin : m_out_pins)
+    if (this->m_priority < new_priority || new_priority == -1)
     {
-        for (Node* node : pin->m_connected_nodes)
+        this->m_priority = new_priority;
+    }
+
+    for (Pin* out_pin : m_out_pins)
+    {
+        for (Pin* connected_pin : out_pin->m_connected_pins)
         {
-            node->setDirtyFlag();
+            connected_pin->m_owner->setDirtyFlag(this->m_priority + 1);
         }
     }
 }

@@ -48,7 +48,7 @@ public:
         return texture_id;
     };
 
-    void setDirtyFlag();
+    void setDirtyFlag(int32_t new_priority = -1);
 
 private:
     void drawInPins();
@@ -63,6 +63,8 @@ public:
 
     std::vector<class Pin*> m_in_pins;
     std::vector<class Pin*> m_out_pins;
+
+    int32_t m_priority;
 
     bool m_need_update;
 };

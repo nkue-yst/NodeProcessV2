@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/07/29
  **********/
 
 #ifndef __PIN_H__
@@ -38,7 +38,7 @@ public:
     std::string m_name;
     Type m_type;
 
-    std::vector<class Node*> m_connected_nodes;
+    std::vector<class Pin*> m_connected_pins;
 
     class Node* m_owner;
 };

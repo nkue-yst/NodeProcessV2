@@ -1,11 +1,12 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/06
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #include "NodeManager.h"
 
+#include <algorithm>
 #include <iostream>
 
 #include "Logger.h"
@@ -38,6 +39,13 @@ void NodeManager::deleteNode()
 
 void NodeManager::drawAll()
 {
+    auto compareNode = [](const Node* lhs, const Node* rhs) -> bool
+    {
+        return lhs->m_priority < rhs->m_priority;
+    };
+
+    std::sort(this->m_node_list.begin(), this->m_node_list.end(), compareNode);
+
     for (Node* node : this->m_node_list)
     {
         node->draw();

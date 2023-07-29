@@ -23,6 +23,7 @@ public:
 private:
     void deleteAllNode();
 
+public:
     std::vector<class Node*> m_node_list;
 };
 

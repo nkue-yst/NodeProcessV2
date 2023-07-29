@@ -48,3 +48,89 @@ void PinManager::unusePin(int32_t id)
 {
     this->m_used_id.erase(id);
 }
+
+Pin* PinManager::getPin(int32_t pin_id)
+{
+    auto pin = std::find_if(
+        this->m_pins.begin(),
+        this->m_pins.end(),
+        [pin_id](Pin* pin)
+        {
+            return pin->m_id == pin_id;
+        }
+    );
+
+    return (pin != this->m_pins.end()) ? *pin : nullptr;
+}
+
+Pin* PinManager::getPair(int32_t pin_id)
+{
+    Pin* pair_pin = nullptr;
+
+    for (auto link : this->m_links)
+    {
+        if (link.first == pin_id)
+        {
+            pair_pin = this->getPin(link.second);
+            break;
+        }
+        else if (link.second == pin_id)
+        {
+            pair_pin = this->getPin(link.first);
+            break;
+        }
+    }
+
+    return pair_pin;
+}
+
+void PinManager::getLinkedId(const int32_t link_id, int32_t *start_id, int32_t *end_id)
+{
+    *start_id = this->m_links.at(link_id).first;
+    *end_id = this->m_links.at(link_id).second;
+}
+
+void PinManager::addLink(std::pair<int32_t, int32_t> new_link)
+{
+    //////////////////////////////
+    ///// Set connected pins /////
+    //////////////////////////////
+    Pin* parent_pin = this->getPin(new_link.first);
+    Pin* child_pin  = this->getPin(new_link.second);
+
+    parent_pin->m_connected_pins.push_back(child_pin);
+    child_pin->m_connected_pins.push_back(parent_pin);
+
+    // Add to list
+    this->m_links.push_back(new_link);
+}
+
+void PinManager::disableLink(const int32_t link_id)
+{
+    int32_t parent_pin_id, child_pin_id;
+    this->getLinkedId(link_id, &parent_pin_id, &child_pin_id);
+
+    /////////////////////////////
+    ///// Disable child pin /////
+    /////////////////////////////
+    Pin* pin = this->getPin(parent_pin_id);
+    auto iter = std::find_if(pin->m_connected_pins.begin(), pin->m_connected_pins.end(),[child_pin_id](Pin* pin_iter)
+    {
+        return child_pin_id == pin_iter->m_id;
+    });
+    pin->m_connected_pins.erase(iter);
+
+    //////////////////////////////
+    ///// Disable parent pin /////
+    //////////////////////////////
+    pin = this->getPin(child_pin_id);
+    iter = std::find_if(pin->m_connected_pins.begin(), pin->m_connected_pins.end(),[parent_pin_id](Pin* pin_iter)
+    {
+        return parent_pin_id == pin_iter->m_id;
+    });
+    pin->m_connected_pins.erase(iter);
+
+    // Remove from list
+    this->m_links.at(link_id).first  = -1;
+    this->m_links.at(link_id).second = -1;
+}

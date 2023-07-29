@@ -128,11 +128,13 @@ void NodeGui::loop()
                 // Add new link to list
                 this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
 
+                Node* start_node = this->m_pin_manager->getPin(start_id)->m_owner;
+
                 // Set dirty flag for all child nodes
-                std::vector<Node*> node_list = this->m_pin_manager->getPin(start_id)->m_connected_nodes;
-                for (Node* node : node_list)
+                std::vector<Pin*> pin_list = this->m_pin_manager->getPin(start_id)->m_connected_pins;
+                for (Pin* pin : pin_list)
                 {
-                    node->setDirtyFlag();
+                    pin->m_owner->setDirtyFlag(start_node->m_priority + 1);
                 }
             }
 
