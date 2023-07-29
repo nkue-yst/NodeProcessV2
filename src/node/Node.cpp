@@ -1,12 +1,15 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/07/21
+ * Edited:  2023/07/29
  **********/
 
 #include "Node.h"
 
 #include "imnodes.h"
+
+#include "Logger.h"
+#include "Logger.h"
 
 Node::Node()
     : m_id(0)
@@ -43,6 +46,19 @@ void Node::draw()
     this->drawOutPins();
 
     ImNodes::EndNode();
+}
+
+void Node::setDirtyFlag()
+{
+    this->m_need_update = true;
+
+    for (Pin* pin : m_out_pins)
+    {
+        for (Node* node : pin->m_connected_nodes)
+        {
+            node->setDirtyFlag();
+        }
+    }
 }
 
 void Node::drawInPins()

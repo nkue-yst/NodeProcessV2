@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <memory>
 
-#include "Logger.h"
 #include "Node.h"
 
 bool NodeGui::init()

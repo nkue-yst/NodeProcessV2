@@ -51,6 +51,8 @@ void BinarizationNode::drawContent()
 {
     if (this->m_need_update)
     {
+        this->m_image.release();
+
         Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);    // Connected pin
 
         if (pair_pin)

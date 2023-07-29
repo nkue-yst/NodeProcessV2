@@ -25,6 +25,11 @@ public:
     // cv::MatからGLuintへの変換
     static GLuint convert_func(cv::Mat* mat)
     {
+        if (mat->empty())
+        {
+            return 0;
+        }
+
         GLuint texture_id;
 
         glGenTextures(1, &texture_id);
@@ -43,18 +48,7 @@ public:
         return texture_id;
     };
 
-    void setDirtyFlag()
-    {
-        this->m_need_update = true;
-
-        for (Pin* pin : m_out_pins)
-        {
-            for (Node* node : pin->m_connected_nodes)
-            {
-                node->setDirtyFlag();
-            }
-        }
-    }
+    void setDirtyFlag();
 
 private:
     void drawInPins();

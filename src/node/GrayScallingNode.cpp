@@ -53,6 +53,8 @@ void GrayScallingNode::drawContent()
 {
     if (this->m_need_update)
     {
+        this->m_image.release();
+
         Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);    // Connected pin
 
         if (pair_pin)
@@ -68,7 +70,6 @@ void GrayScallingNode::drawContent()
         {
             this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
         }
-
 
         this->process();
 

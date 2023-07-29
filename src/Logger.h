@@ -4,8 +4,7 @@
  * Edited:  2023/07/29
  **********/
 
-#ifndef __LOGGER_H__
-#define __LOGGER_H__
+#pragma once
 
 #include <chrono>
 #include <fstream>
@@ -76,5 +75,3 @@ private:
 #define LOG(message)     NodeGui::get().m_logger->log(LogType::LOG, message)
 #define WARNING(message) NodeGui::get().m_logger->log(LogType::WARNING, message)
 #define ERROR(message)   NodeGui::get().m_logger->log(LogType::ERROR, message)
-
-#endif
