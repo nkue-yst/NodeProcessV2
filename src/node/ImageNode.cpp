@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/05/26
- * Edited:  2023/07/21
+ * Edited:  2023/07/29
  **********/
 
 #include "ImageNode.h"
@@ -10,7 +10,7 @@
 #include "imnodes.h"
 #include <opencv2/opencv.hpp>
 
-#include "Log.h"
+#include "Logger.h"
 #include "NodeGui.h"
 #include "Pin.h"
 
@@ -35,7 +35,7 @@ ImageNode::ImageNode(std::string file_path)
     ///////////////////////////
     if (!this->loadData(file_path))
     {
-        log(LogType::WARNING, "Failed to load: \"" + file_path + "\"");
+        WARNING("Failed to load: \"" + file_path + "\"");
     }
 }
 
@@ -49,7 +49,7 @@ cv::Mat ImageNode::getContent(Pin::Type pin_type)
     }
     else
     {
-        log(LogType::ERROR, "Wrong type of pin connected.");
+        ERROR("Wrong type of pin connected.");
         NodeGui::get().abort();
     }
 

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/07/21
+ * Edited:  2023/07/29
  **********/
 
 #pragma once
@@ -18,7 +18,7 @@ class Node
 {
 public:
     Node();
-    ~Node();
+    virtual ~Node();
 
     void draw();
 

@@ -1,10 +1,12 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/22
+ * Edited:  2023/07/29
  **********/
 
 #pragma once
+
+#include <memory>
 
 #include "SDL.h"
 #include "SDL_opengl.h"
@@ -16,6 +18,7 @@
 #include "ImGuiFileDialog.h"
 
 #include "FileDialog.h"
+#include "Logger.h"
 #include "NodeManager.h"
 #include "PinManager.h"
 #include "MenuBar.h"
@@ -83,6 +86,7 @@ public:
     int32_t m_win_width;
     int32_t m_win_height;
 
-    NodeManager* m_node_manager;
-    PinManager* m_pin_manager;
+    class NodeManager* m_node_manager;
+    class PinManager* m_pin_manager;
+    std::unique_ptr<class Logger> m_logger;
 };

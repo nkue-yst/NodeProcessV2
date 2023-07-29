@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/22
- * Edited:  2023/07/22
+ * Edited:  2023/07/28
  **********/
 
 #include "FileDialog.h"
@@ -10,10 +10,13 @@
 #include "ImGuiFileDialog.h"
 
 #include "ImageNode.h"
+#include "Logger.h"
 #include "NodeGui.h"
 
 FileDialog::FileDialog()
 {
+    LOG("Initialize FileDialog Manager.");
+
     ///////////////////////////////////////////
     ///// Initialize file dialog settings /////
     ///////////////////////////////////////////
@@ -59,6 +62,7 @@ FileDialog::FileDialog()
 
 FileDialog::~FileDialog()
 {
+    LOG("Destroy FileDialog Manager.");
 }
 
 void FileDialog::draw()

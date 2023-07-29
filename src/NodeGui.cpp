@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/22
+ * Edited:  2023/07/29
  **********/
 
 #include "NodeGui.h"
@@ -9,12 +9,15 @@
 #include <cstdlib>
 #include <memory>
 
-#include "Log.h"
+#include "Logger.h"
 #include "Node.h"
 
 bool NodeGui::init()
 {
-    log(LogType::LOG, "Initializing components...");
+    this->m_logger = std::make_unique<Logger>();
+
+    LOG("Initialize NodeGui.");
+    LOG("Initialize components...");
 
     this->m_done = false;
 
@@ -37,19 +40,19 @@ bool NodeGui::init()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-    //////////////////////
-    ///// Setup menu /////
-    //////////////////////
-    this->m_menu_bar = new MenuBar();
-    this->m_file_dialog = new FileDialog();
-
     ////////////////////////////
     ///// Setup components /////
     ////////////////////////////
     this->m_node_manager = new NodeManager();
     this->m_pin_manager = new PinManager();
 
-    log(LogType::LOG, "Components initialization complete.");
+    //////////////////////
+    ///// Setup menu /////
+    //////////////////////
+    this->m_menu_bar = new MenuBar();
+    this->m_file_dialog = new FileDialog();
+
+    LOG("Components initialization complete.");
 
     return true;
 }
@@ -118,7 +121,6 @@ void NodeGui::loop()
         ///// Update links /////
         ////////////////////////
         {
-
             int32_t start_id, end_id;
 
             // New created link
@@ -146,7 +148,6 @@ void NodeGui::loop()
                 // Set dirty flag for all child nodes
                 this->m_pin_manager->getPin(end_id)->m_owner->setDirtyFlag();
             }
-
         }
 
         /////////////////////////////////////
@@ -201,7 +202,7 @@ void NodeGui::abort()
 {
     this->cleanup();
 
-    log(LogType::ERROR, "An error occurred and the program will now terminate.");
+    ERROR("An error occurred and the program will now terminate.");
     std::exit(1);
 }
 
@@ -212,11 +213,15 @@ void NodeGui::quit()
 
 void NodeGui::cleanup()
 {
-    log(LogType::LOG, "Clean up components...");
+    std::cout << "- - - - - - - - - - - - - - - - - - - -" << std::endl;
+    LOG("Clean up components...");
 
     // Clean up components
-    delete this->m_menu_bar;
+    delete this->m_pin_manager;
     delete this->m_node_manager;
+
+    delete this->m_file_dialog;
+    delete this->m_menu_bar;
 
     // Clean up SDL
     SDL_DestroyRenderer(this->m_renderer);
@@ -230,6 +235,8 @@ void NodeGui::cleanup()
 
     // Quit SDL system
     SDL_Quit();
+
+    LOG("Destroy NodeGui.");
 }
 
 void NodeGui::createWindow()

@@ -1,8 +1,11 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/06
- * Edited:  2023/07/20
+ * Edited:  2023/07/29
  **********/
+
+#ifndef __NODE_MANAGER_H__
+#define __NODE_MANAGER_H__
 
 #include <vector>
 
@@ -18,5 +21,9 @@ public:
     void drawAll();
 
 private:
+    void deleteAllNode();
+
     std::vector<class Node*> m_node_list;
 };
+
+#endif

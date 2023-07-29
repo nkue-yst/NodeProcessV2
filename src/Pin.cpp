@@ -6,6 +6,7 @@
 
 #include "Pin.h"
 
+#include "Logger.h"
 #include "Node.h"
 #include "NodeGui.h"
 
@@ -15,8 +16,10 @@ Pin::Pin(Node* owner, int32_t id, Pin::Type type, std::string name)
     , m_type(type)
     , m_owner(owner)
 {
+    DEBUG("Created pin.  (id: " + std::to_string(this->m_id) + ", name: " + this->m_name + ")");
 }
 
 Pin::~Pin()
 {
+    DEBUG("Destroy pin.  (id: " + std::to_string(this->m_id) + ", name: " + this->m_name + ")");
 }

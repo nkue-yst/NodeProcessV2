@@ -1,17 +1,26 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/07/28
  **********/
 
 #include "PinManager.h"
 
+#include "Logger.h"
+
 PinManager::PinManager()
 {
+    LOG("Initialize PinManager.");
 }
 
 PinManager::~PinManager()
 {
+    LOG("Destroy PinManager.");
+
+    for (auto pin : this->m_pins)
+    {
+        delete pin;
+    }
 }
 
 Pin* PinManager::newPin(Node* owner, Pin::Type type, std::string name)

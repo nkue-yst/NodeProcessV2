@@ -1,14 +1,14 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/21
- * Edited:  2023/07/22
+ * Edited:  2023/07/29
  **********/
 
 #include "GrayScallingNode.h"
 
 #include "imgui.h"
 
-#include "Log.h"
+#include "Logger.h"
 #include "NodeGui.h"
 
 GrayScallingNode::GrayScallingNode()
@@ -42,7 +42,7 @@ cv::Mat GrayScallingNode::getContent(Pin::Type pin_type)
     }
     else
     {
-        log(LogType::ERROR, "Wrong type of pin connected.");
+        ERROR("Wrong type of pin connected.");
         NodeGui::get().abort();
     }
 
