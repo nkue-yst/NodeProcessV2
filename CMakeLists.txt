@@ -66,6 +66,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/PinManager.cpp
 	${MAIN_SRC_DIR}/FileDialog.cpp
 
+	${MAIN_SRC_DIR}/node/BinarizationNode.cpp
 	${MAIN_SRC_DIR}/node/GrayScallingNode.cpp
 	${MAIN_SRC_DIR}/node/ImageNode.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp

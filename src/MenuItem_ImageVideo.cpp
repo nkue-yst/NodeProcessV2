@@ -9,6 +9,7 @@
 #include "imgui.h"
 
 #include "NodeGui.h"
+#include "BinarizationNode.h"
 #include "GrayScallingNode.h"
 #include "ImageNode.h"
 
@@ -31,6 +32,14 @@ void MenuItem_ImageVideo::draw()
         if (ImGui::MenuItem("GrayScaling"))
         {
             Node* new_node = new GrayScallingNode();
+
+            NodeGui::get().m_node_manager->addNode(new_node);
+        }
+
+        // Create new BinarizationNode
+        if (ImGui::MenuItem("Binarization"))
+        {
+            Node* new_node = new BinarizationNode();
 
             NodeGui::get().m_node_manager->addNode(new_node);
         }
