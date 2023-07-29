@@ -1,15 +1,12 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/21
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #include "GrayScallingNode.h"
 
-#include "imgui.h"
-
 #include "Logger.h"
-#include "NodeGui.h"
 
 GrayScallingNode::GrayScallingNode()
 {
@@ -17,6 +14,8 @@ GrayScallingNode::GrayScallingNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "GrayScalling";
+
+    this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 
     ///////////////////////////
     ///// Initialize Pins /////
@@ -68,7 +67,7 @@ void GrayScallingNode::drawContent()
         }
         else
         {
-            this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
+            this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
         }
 
         this->process();

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/29
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #include "BinarizationNode.h"
@@ -15,6 +15,8 @@ BinarizationNode::BinarizationNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Binarization";
+
+    this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 
     ///////////////////////////
     ///// Initialize Pins /////
@@ -66,7 +68,7 @@ void BinarizationNode::drawContent()
         }
         else
         {
-            this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
+            this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
         }
 
         this->process();
