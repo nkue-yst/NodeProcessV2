@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #ifndef __PIN_MANAGER_H__
@@ -39,6 +39,7 @@ public:
     Pin* getPin(int32_t pin_id);
     Pin* getPair(int32_t pin_id);
     void getLinkedId(const int32_t link_id, int32_t *start_id, int32_t *end_id);
+    int32_t getLinkId(const int32_t pin_id);
 
     void addLink(std::pair<int32_t, int32_t> new_link);
     void disableLink(const int32_t link_id);

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/29
+ * Edited:  2023/07/30
  **********/
 
 #include "NodeGui.h"
@@ -128,10 +128,12 @@ void NodeGui::loop()
                 // Add new link to list
                 this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
 
+                //////////////////////////////////////////////
+                ///// Set dirty flag for all child nodes /////
+                //////////////////////////////////////////////
                 Node* start_node = this->m_pin_manager->getPin(start_id)->m_owner;
-
-                // Set dirty flag for all child nodes
                 std::vector<Pin*> pin_list = this->m_pin_manager->getPin(start_id)->m_connected_pins;
+
                 for (Pin* pin : pin_list)
                 {
                     pin->m_owner->setDirtyFlag(start_node->m_priority + 1);

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/28
+ * Edited:  2023/07/30
  **********/
 
 #include "PinManager.h"
@@ -90,8 +90,39 @@ void PinManager::getLinkedId(const int32_t link_id, int32_t *start_id, int32_t *
     *end_id = this->m_links.at(link_id).second;
 }
 
+int32_t PinManager::getLinkId(const int32_t pin_id)
+{
+    //for (auto link : this->m_links)
+    int32_t link_num = this->m_links.size();
+    for (int32_t i = 0; i < link_num; ++i)
+    {
+        if (this->m_links.at(i).first == pin_id || this->m_links.at(i).second == pin_id)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 void PinManager::addLink(std::pair<int32_t, int32_t> new_link)
 {
+    /////////////////////////////////////////////////
+    ///// If already linked, break the old link /////
+    /////////////////////////////////////////////////
+    while (true)
+    {
+        int32_t old_link_id = this->getLinkId(new_link.second);
+
+        if (old_link_id >= 0)
+        {
+            this->disableLink(old_link_id);
+            continue;
+        }
+
+        break;
+    }
+
     //////////////////////////////
     ///// Set connected pins /////
     //////////////////////////////
