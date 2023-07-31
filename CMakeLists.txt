@@ -36,6 +36,11 @@ set(IMNODES_SOURCES ${IMNODES_DIR}/imnodes.cpp)
 include_directories(${CMAKE_SOURCE_DIR}/thirdparty/ImGuiFileDialog)
 set(IMGUI_FILE_DIALOG_SOURCES ${CMAKE_SOURCE_DIR}/thirdparty/ImGuiFileDialog/ImGuiFileDialog.cpp)
 
+### implot ###
+set(IMPLOT_DIR ${CMAKE_SOURCE_DIR}/thirdparty/implot)
+include_directories(${IMPLOT_DIR})
+set(IMPLOT_SOURCES ${IMPLOT_DIR}/implot.cpp ${IMPLOT_DIR}/implot_items.cpp)
+
 ### OpenGL ###
 find_package(OpenGL REQUIRED)
 
@@ -68,10 +73,11 @@ set(NP_SOURCES
 
 	${MAIN_SRC_DIR}/node/BinarizationNode.cpp
 	${MAIN_SRC_DIR}/node/GrayScallingNode.cpp
+	${MAIN_SRC_DIR}/node/HistogramNode.cpp
 	${MAIN_SRC_DIR}/node/ImageNode.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp
 )
-add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES})
+add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
 target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} SDL2::Core SDL2::Main)
 
 if(WIN32)

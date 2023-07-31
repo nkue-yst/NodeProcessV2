@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/30
+ * Edited:  2023/07/31
  **********/
 
 #include "NodeGui.h"
@@ -10,6 +10,9 @@
 #include <memory>
 
 #include "Node.h"
+
+#include "HistogramNode.h"
+#include "ImageNode.h"
 
 bool NodeGui::init()
 {
@@ -233,8 +236,9 @@ void NodeGui::cleanup()
     // Clean up ImGui
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
-    ImNodes::DestroyContext();
-    ImGui::DestroyContext();
+    ImPlot::DestroyContext(this->m_implot_context);
+    ImNodes::DestroyContext(this->m_imnodes_context);
+    ImGui::DestroyContext(this->m_imgui_context);
 
     // Quit SDL system
     SDL_Quit();
@@ -275,8 +279,9 @@ void NodeGui::setupImGui()
 {
     // Initialize ImGui
     IMGUI_CHECKVERSION();
-    this->m_imgui_context = ImGui::CreateContext();
+    this->m_imgui_context   = ImGui::CreateContext();
     this->m_imnodes_context = ImNodes::CreateContext();
+    this->m_implot_context  = ImPlot::CreateContext();
 
     const char* glsl_version = "#version 130";
 

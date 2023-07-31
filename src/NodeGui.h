@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/29
+ * Edited:  2023/07/31
  **********/
 
 #pragma once
@@ -16,6 +16,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imnodes.h"
 #include "ImGuiFileDialog.h"
+#include "implot.h"
 
 #include "FileDialog.h"
 #include "Logger.h"
@@ -75,6 +76,7 @@ private:
 
     ImGuiContext* m_imgui_context;
     ImNodesContext* m_imnodes_context;
+    ImPlotContext* m_implot_context;
 
     ImVec4 m_bg_color;
 
