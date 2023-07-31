@@ -12,6 +12,7 @@
 #include "GL/gl.h"
 #include "opencv2/opencv.hpp"
 
+#include "NodeStyle.h"
 #include "Pin.h"
 
 class Node
@@ -51,6 +52,7 @@ public:
     void setDirtyFlag(int32_t new_priority = -1);
 
 private:
+    int getPinShape(Pin::Type pin_type);
     void drawInPins();
     void drawOutPins();
 
@@ -67,4 +69,7 @@ public:
     int32_t m_priority;
 
     bool m_need_update;
+
+protected:
+    Color m_color;
 };

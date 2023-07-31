@@ -22,6 +22,7 @@ HistogramNode::HistogramNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Histgram";
+    this->m_color = NodeColor::GraphicsAnalyzeNode;
 
     ///////////////////////////
     ///// Initialize Pins /////

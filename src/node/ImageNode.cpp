@@ -20,6 +20,7 @@ ImageNode::ImageNode(std::string file_path)
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Image Source";
+    this->m_color = NodeColor::ImageSourceNode;
 
     ///////////////////////////
     ///// Initialize Pins /////
