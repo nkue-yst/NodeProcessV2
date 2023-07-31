@@ -19,9 +19,12 @@
 #include "implot.h"
 
 #include "FileDialog.h"
-#include "Logger.h"
 #include "NodeManager.h"
 #include "PinManager.h"
+
+#include "Logger.h"
+#include "TimeProfiler.h"
+
 #include "MenuBar.h"
 
 class NodeGui
@@ -90,5 +93,7 @@ public:
 
     class NodeManager* m_node_manager;
     class PinManager* m_pin_manager;
+
     std::unique_ptr<class Logger> m_logger;
+    std::unique_ptr<class TimeProfiler> m_time_profiler;
 };

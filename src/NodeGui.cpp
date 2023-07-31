@@ -17,6 +17,7 @@
 bool NodeGui::init()
 {
     this->m_logger = std::make_unique<Logger>();
+    this->m_time_profiler = std::make_unique<TimeProfiler>();
 
     LOG("Initialize NodeGui.");
     LOG("Initialize components...");

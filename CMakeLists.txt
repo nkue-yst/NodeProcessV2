@@ -58,7 +58,7 @@ include_directories(${CMAKE_SOURCE_DIR}/thirdparty/stb)
 ### NodeProcessingV2 ###
 set(MAIN_SRC_DIR ${CMAKE_SOURCE_DIR}/src/)
 include_directories(${MAIN_SRC_DIR})
-include_directories((${MAIN_SRC_DIR}/node))
+include_directories((${MAIN_SRC_DIR}/node) ${MAIN_SRC_DIR}/profiler)
 set(NP_SOURCES
 	${MAIN_SRC_DIR}/main.cpp
 	${MAIN_SRC_DIR}/MenuBar.cpp

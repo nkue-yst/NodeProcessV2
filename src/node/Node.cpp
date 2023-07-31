@@ -6,10 +6,13 @@
 
 #include "Node.h"
 
+#include <string>
+
 #include "imnodes.h"
 
 #include "Logger.h"
-#include "Logger.h"
+#include "NodeGui.h"
+#include "TimeProfiler.h"
 
 Node::Node()
     : m_id(0)
@@ -26,6 +29,9 @@ Node::~Node()
 void Node::draw()
 {
     ImNodes::BeginNode(this->m_id);
+
+    // Start time profiler
+    NodeGui::get().m_time_profiler->start("Draw " + this->m_name + ": " + std::to_string(this->m_id));
 
     ///////////////////////////
     ///// Draw node title /////
@@ -45,6 +51,12 @@ void Node::draw()
     /////////////////////
     this->drawInPins();
     this->drawOutPins();
+
+    // Stop time profiler
+    double elapsed_time = NodeGui::get().m_time_profiler->stop("Draw " + this->m_name + ": " + std::to_string(this->m_id));
+
+    ImGui::Spacing();
+    ImGui::Text("%.2fms", elapsed_time / 1000.f);
 
     ImNodes::EndNode();
 }
