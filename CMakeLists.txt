@@ -78,8 +78,6 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/node/ImageNode.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp
 )
-add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
-target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} ${SDL2_LIBRARIES})
 
 if(WIN32)
 	set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
@@ -89,7 +87,7 @@ if(WIN32)
 	set(_src_root_path "${CMAKE_SOURCE_DIR}/src/")
 
 	file(GLOB_RECURSE _header_list "${_src_root_path}/*.h")
-	set_property(GLOBAL PROPERTY PUBLIC_HEADER ${_header_list})
+	add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES} ${_header_list})
 
 	file(GLOB_RECURSE _source_list 
 		LIST_DIRECTORIES false
@@ -104,4 +102,8 @@ if(WIN32)
 	endforeach()
 
 	source_group("imgui" FILES ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
-endif(WIN32)
+else()
+	add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
+endif()
+
+target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} ${SDL2_LIBRARIES})
