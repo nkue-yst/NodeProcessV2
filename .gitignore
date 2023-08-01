@@ -1,2 +1,4 @@
 build/
 sample/sample.mp4
+.vs/
+CMakeSettings.json

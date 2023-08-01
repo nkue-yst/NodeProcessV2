@@ -43,6 +43,7 @@ set(IMPLOT_SOURCES ${IMPLOT_DIR}/implot.cpp ${IMPLOT_DIR}/implot_items.cpp)
 
 ### OpenGL ###
 find_package(OpenGL REQUIRED)
+include_directories(${OpenGL_INCLUDE_DIRS})
 
 ### OpenCV ###
 find_package(OpenCV REQUIRED)
@@ -78,9 +79,29 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/node/Node.cpp
 )
 add_executable(${PROJECT_NAME} ${NP_SOURCES} ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
-target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} SDL2::Core SDL2::Main)
+target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} ${SDL2_LIBRARIES})
 
 if(WIN32)
 	set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 	set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+	set(_src_root_path "${CMAKE_SOURCE_DIR}/src/")
+
+	file(GLOB_RECURSE _header_list "${_src_root_path}/*.h")
+	set_property(GLOBAL PROPERTY PUBLIC_HEADER ${_header_list})
+
+	file(GLOB_RECURSE _source_list 
+		LIST_DIRECTORIES false
+		"${_src_root_path}/*.cpp"
+		"${_src_root_path}/*.h"
+	)
+	foreach(_source IN ITEMS ${_source_list})
+		get_filename_component(_source_path "${_source}" PATH)
+		file(RELATIVE_PATH _source_path_rel "${_src_root_path}" "${_source_path}")
+		string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
+		source_group("${_group_path}" FILES "${_source}")
+	endforeach()
+
+	source_group("imgui" FILES ${IMGUI_SOURCES} ${IMNODES_SOURCES} ${IMGUI_FILE_DIALOG_SOURCES} ${IMPLOT_SOURCES})
 endif(WIN32)

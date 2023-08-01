@@ -30,4 +30,6 @@ int main(int argc, char** argv)
     ///// Quit /////
     ////////////////
     NodeGui::get().cleanup();
+
+    return 0;
 }

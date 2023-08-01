@@ -6,12 +6,20 @@
 
 #include "FileDialog.h"
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 #include "GL/gl.h"
 #include "ImGuiFileDialog.h"
 
 #include "ImageNode.h"
 #include "Logger.h"
 #include "NodeGui.h"
+
+#ifndef GL_CLAMP_TO_EDGE
+#define GL_CLAMP_TO_EDGE 0x812F
+#endif
 
 FileDialog::FileDialog()
 {

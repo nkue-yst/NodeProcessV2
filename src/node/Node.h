@@ -9,6 +9,10 @@
 #include <string>
 #include <vector>
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 #include "GL/gl.h"
 #include "opencv2/opencv.hpp"
 
