@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/31
+ * Edited:  2023/08/03
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -10,6 +10,7 @@
 
 #include "NodeGui.h"
 #include "BinarizationNode.h"
+#include "EdgeDetectionNode.h"
 #include "GrayScallingNode.h"
 #include "HistogramNode.h"
 #include "ImageNode.h"
@@ -30,18 +31,26 @@ void MenuItem_ImageVideo::draw()
         ImGui::Spacing();
         ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.f), "PROCESSING");
 
-        // Create new GrayScalingNode
-        if (ImGui::MenuItem("GrayScaling"))
-        {
-            Node* new_node = new GrayScallingNode();
-
-            NodeGui::get().m_node_manager->addNode(new_node);
-        }
-
         // Create new BinarizationNode
         if (ImGui::MenuItem("Binarization"))
         {
             Node* new_node = new BinarizationNode();
+
+            NodeGui::get().m_node_manager->addNode(new_node);
+        }
+
+        // Create new EdgeDetectionNode
+        if (ImGui::MenuItem("EdgeDetection"))
+        {
+            Node* new_node = new EdgeDetectionNode();
+
+            NodeGui::get().m_node_manager->addNode(new_node);
+        }
+
+        // Create new GrayScalingNode
+        if (ImGui::MenuItem("GrayScaling"))
+        {
+            Node* new_node = new GrayScallingNode();
 
             NodeGui::get().m_node_manager->addNode(new_node);
         }
