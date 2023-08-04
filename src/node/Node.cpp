@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/07/30
+ * Edited:  2023/08/04
  **********/
 
 #include "Node.h"
@@ -52,14 +52,12 @@ void Node::draw()
     ///// Draw node content /////
     /////////////////////////////
     this->drawContent();
-    ImGui::Dummy(ImVec2(0.f, 10.f));
 
-    /////////////////////
-    ///// Draw pins /////
-    /////////////////////
+    /////////////////////////////////
+    ///// Draw pins and options /////
+    /////////////////////////////////
     this->drawInPins();
     this->drawOutPins();
-
     ImGui::Spacing();
 
     // Stop time profiler
@@ -91,29 +89,11 @@ void Node::setDirtyFlag(int32_t new_priority)
     }
 }
 
-int Node::getPinShape(Pin::Type pin_type)
-{
-    ImNodesPinShape pin_shape;
-
-    switch (pin_type)
-    {
-    case Pin::Type::RGB:
-        pin_shape = ImNodesPinShape_CircleFilled;
-        break;
-
-    default:
-        pin_shape = ImNodesPinShape_Circle;
-        break;
-    }
-
-    return pin_shape;
-}
-
 void Node::drawInPins()
 {
     for (auto pin : this->m_in_pins)
     {
-        ImNodes::BeginInputAttribute(pin->m_id, this->getPinShape(pin->m_type));
+        ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
         ImGui::TextUnformatted(pin->m_name.c_str());
         ImNodes::EndInputAttribute();
     }
@@ -123,7 +103,7 @@ void Node::drawOutPins()
 {
     for (auto pin : this->m_out_pins)
     {
-        ImNodes::BeginOutputAttribute(pin->m_id, this->getPinShape(pin->m_type));
+        ImNodes::BeginOutputAttribute(pin->m_id, pin->getShape());
         const float label_width = ImGui::CalcTextSize(pin->m_name.c_str()).x;
         ImGui::Indent(95.f - label_width);
         ImGui::TextUnformatted(pin->m_name.c_str());

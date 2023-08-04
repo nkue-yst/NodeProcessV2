@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/03
+ * Edited:  2023/08/04
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -29,7 +29,7 @@ void MenuItem_ImageVideo::draw()
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
-        ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.f), "PROCESSING");
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.f), "PROCESSING");
 
         // Create new BinarizationNode
         if (ImGui::MenuItem("Binarization"))
@@ -57,7 +57,7 @@ void MenuItem_ImageVideo::draw()
 
         ImGui::Spacing();
         ImGui::Spacing();
-        ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.f), "ANALYZE");
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.f), "ANALYZE");
 
         // Create new HistgramNode
         if (ImGui::MenuItem("Histgram"))

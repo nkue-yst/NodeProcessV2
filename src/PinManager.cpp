@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/30
+ * Edited:  2023/08/04
  **********/
 
 #include "PinManager.h"
@@ -105,8 +105,19 @@ int32_t PinManager::getLinkId(const int32_t pin_id)
     return -1;
 }
 
-void PinManager::addLink(std::pair<int32_t, int32_t> new_link)
+bool PinManager::addLink(std::pair<int32_t, int32_t> new_link)
 {
+    ////////////////////////////////////////////////////////
+    ///// Check if it is a connectable pin combination /////
+    ////////////////////////////////////////////////////////
+    Pin* parent_pin = this->getPin(new_link.first);
+    Pin* child_pin = this->getPin(new_link.second);
+
+    if (parent_pin->m_type != child_pin->m_type)
+    {
+        return false;
+    }
+
     /////////////////////////////////////////////////
     ///// If already linked, break the old link /////
     /////////////////////////////////////////////////
@@ -126,14 +137,13 @@ void PinManager::addLink(std::pair<int32_t, int32_t> new_link)
     //////////////////////////////
     ///// Set connected pins /////
     //////////////////////////////
-    Pin* parent_pin = this->getPin(new_link.first);
-    Pin* child_pin  = this->getPin(new_link.second);
-
     parent_pin->m_connected_pins.push_back(child_pin);
     child_pin->m_connected_pins.push_back(parent_pin);
 
     // Add to list
     this->m_links.push_back(new_link);
+
+    return true;
 }
 
 void PinManager::disableLink(const int32_t link_id)

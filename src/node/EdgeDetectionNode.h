@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/03
- * Edited:  2023/08/03
+ * Edited:  2023/08/04
  **********/
 
 #pragma once
@@ -17,8 +17,10 @@ public:
 
 protected:
     void drawContent() override;
+    void drawInPins() override;
+
     void process() override;
 
 private:
-    double m_threshold[2];
+    int32_t m_threshold[2];
 };

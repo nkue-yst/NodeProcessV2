@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/07/31
+ * Edited:  2023/08/04
  **********/
 
 #include "NodeGui.h"
@@ -130,17 +130,18 @@ void NodeGui::loop()
             if (ImNodes::IsLinkCreated(&start_id, &end_id))
             {
                 // Add new link to list
-                this->m_pin_manager->addLink(std::make_pair(start_id, end_id));
-
-                //////////////////////////////////////////////
-                ///// Set dirty flag for all child nodes /////
-                //////////////////////////////////////////////
-                Node* start_node = this->m_pin_manager->getPin(start_id)->m_owner;
-                std::vector<Pin*> pin_list = this->m_pin_manager->getPin(start_id)->m_connected_pins;
-
-                for (Pin* pin : pin_list)
+                if (this->m_pin_manager->addLink(std::make_pair(start_id, end_id)))
                 {
-                    pin->m_owner->setDirtyFlag(start_node->m_priority + 1);
+                    //////////////////////////////////////////////
+                    ///// Set dirty flag for all child nodes /////
+                    //////////////////////////////////////////////
+                    Node* start_node = this->m_pin_manager->getPin(start_id)->m_owner;
+                    std::vector<Pin*> pin_list = this->m_pin_manager->getPin(start_id)->m_connected_pins;
+
+                    for (Pin* pin : pin_list)
+                    {
+                        pin->m_owner->setDirtyFlag(start_node->m_priority + 1);
+                    }
                 }
             }
 

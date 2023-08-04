@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/03
- * Edited:  2023/08/03
+ * Edited:  2023/08/04
  **********/
 
  #include "EdgeDetectionNode.h"
@@ -10,8 +10,8 @@
 
 EdgeDetectionNode::EdgeDetectionNode()
 {
-    this->m_threshold[0] = 100.f;
-    this->m_threshold[1] = 300.f;
+    this->m_threshold[0] = 255 / 3;
+    this->m_threshold[1] = 255 / 3 * 2;
 
     ///////////////////////////
     ///// Initialize Node /////
@@ -28,6 +28,12 @@ EdgeDetectionNode::EdgeDetectionNode()
 
     // Input pins
     new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::RGB, "Input");
+    this->m_in_pins.push_back(new_pin);
+
+    new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::VALUE, "Threshold");
+    this->m_in_pins.push_back(new_pin);
+
+    new_pin = NodeGui::get().m_pin_manager->newPin(this, Pin::Type::VALUE, "Threshold");
     this->m_in_pins.push_back(new_pin);
 
     // Output pins
@@ -83,6 +89,63 @@ void EdgeDetectionNode::drawContent()
     }
 
     ImGui::Image((void*)(uintptr_t)this->m_gl_texture, ImVec2(this->m_width, this->m_height));
+}
+
+void EdgeDetectionNode::drawInPins()
+{
+    // Draw pin for input image
+    auto pin_iter = this->m_in_pins.begin();
+    Pin* pin = *(pin_iter++);
+    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
+    ImGui::TextUnformatted(pin->m_name.c_str());
+    ImNodes::EndInputAttribute();
+
+    // Threshold settings
+    auto unify = [this]() -> void
+    {
+        if (this->m_threshold[0] > this->m_threshold[1])
+        {
+            int32_t temp = this->m_threshold[0];
+            this->m_threshold[0] = this->m_threshold[1];
+            this->m_threshold[1] = temp;
+        }
+    };
+
+    pin = *(pin_iter++);
+    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
+    ImGui::TextUnformatted(pin->m_name.c_str());
+    ImNodes::EndInputAttribute();
+
+    if (pin->m_connected_pins.empty())
+    {
+        ImGui::PushID(pin->m_id);
+        ImGui::PushItemWidth(this->m_width);
+        if (ImGui::SliderInt("", &this->m_threshold[0], 0, 255))
+        {
+            unify();
+            this->setDirtyFlag();
+        }
+        ImGui::PopItemWidth();
+        ImGui::PopID();
+    }
+
+    pin = *(pin_iter++);
+    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
+    ImGui::TextUnformatted(pin->m_name.c_str());
+    ImNodes::EndInputAttribute();
+
+    if (pin->m_connected_pins.empty())
+    {
+        ImGui::PushID(pin->m_id);
+        ImGui::PushItemWidth(this->m_width);
+        if (ImGui::SliderInt("", &this->m_threshold[1], 0, 255))
+        {
+            unify();
+            this->setDirtyFlag();
+        }
+        ImGui::PopItemWidth();
+        ImGui::PopID();
+    }
 }
 
 void EdgeDetectionNode::process()

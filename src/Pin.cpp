@@ -23,3 +23,25 @@ Pin::~Pin()
 {
     DEBUG("Destroy pin.  (id: " + std::to_string(this->m_id) + ", name: " + this->m_name + ")");
 }
+
+int Pin::getShape()
+{
+    ImNodesPinShape pin_shape;
+
+    switch (this->m_type)
+    {
+    case Pin::Type::RGB:
+        pin_shape = ImNodesPinShape_CircleFilled;
+        break;
+
+    case Pin::Type::VALUE:
+        pin_shape = ImNodesPinShape_QuadFilled;
+        break;
+
+    default:
+        pin_shape = ImNodesPinShape_Circle;
+        break;
+    }
+
+    return pin_shape;
+}

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/07/29
+ * Edited:  2023/08/04
  **********/
 
 #pragma once
@@ -55,12 +55,10 @@ public:
 
     void setDirtyFlag(int32_t new_priority = -1);
 
-private:
-    int getPinShape(Pin::Type pin_type);
-    void drawInPins();
-    void drawOutPins();
-
 protected:
+    virtual void drawInPins();
+    virtual void drawOutPins();
+
     virtual void drawContent() = 0;
 
 public:
