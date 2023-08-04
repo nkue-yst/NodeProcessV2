@@ -57,6 +57,7 @@ void Node::draw()
     ///// Draw pins and options /////
     /////////////////////////////////
     this->drawInPins();
+    ImGui::Spacing();
     this->drawOutPins();
     ImGui::Spacing();
 

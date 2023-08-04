@@ -73,6 +73,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/FileDialog.cpp
 
 	${MAIN_SRC_DIR}/node/BinarizationNode.cpp
+	${MAIN_SRC_DIR}/node/EdgeDetectionNode.cpp
 	${MAIN_SRC_DIR}/node/GrayScallingNode.cpp
 	${MAIN_SRC_DIR}/node/HistogramNode.cpp
 	${MAIN_SRC_DIR}/node/ImageNode.cpp
