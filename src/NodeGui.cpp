@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/08/04
+ * Edited:  2023/08/05
  **********/
 
 #include "NodeGui.h"
@@ -108,7 +108,7 @@ void NodeGui::loop()
         ////////////////////////////////
         ImGui::SetNextWindowSize(ImVec2(this->m_win_width, this->m_win_height), ImGuiCond_Always);
         ImGui::SetNextWindowPos(ImVec2(0.f, 0.f));
-        ImGui::Begin("NodeEditor", nullptr, ImGuiWindowFlags_MenuBar);
+        ImGui::Begin("NodeEditor", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse);
 
         /////////////////////////
         ///// Draw menu bar /////

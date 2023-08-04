@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/01
- * Edited:  2023/08/01
+ * Edited:  2023/08/05
  **********/
 
 #pragma once
@@ -18,5 +18,5 @@ namespace NodeColor
     constexpr Color GraphicsAnalyzeNode    {  32,  32,  32 };
     constexpr Color GraphicsProcessingNode {  64, 128, 128 };
     constexpr Color ImageSourceNode        {  64, 128,  64 };
-    constexpr Color VideoSourceNode        {  64, 128,  64 };
+    constexpr Color VideoSourceNode        {  64,  64, 128 };
 }

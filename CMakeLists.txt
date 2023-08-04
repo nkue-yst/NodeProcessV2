@@ -78,6 +78,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/node/HistogramNode.cpp
 	${MAIN_SRC_DIR}/node/ImageNode.cpp
 	${MAIN_SRC_DIR}/node/Node.cpp
+	${MAIN_SRC_DIR}/node/VideoNode.cpp
 )
 
 if(WIN32)

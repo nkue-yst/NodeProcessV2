@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/22
- * Edited:  2023/07/28
+ * Edited:  2023/08/05
  **********/
 
 #include "FileDialog.h"
@@ -16,6 +16,7 @@
 #include "ImageNode.h"
 #include "Logger.h"
 #include "NodeGui.h"
+#include "VideoNode.h"
 
 #ifndef GL_CLAMP_TO_EDGE
 #define GL_CLAMP_TO_EDGE 0x812F
@@ -93,6 +94,22 @@ void FileDialog::draw()
             std::string file_path = ImGuiFileDialog::Instance()->GetFilePathName();
 
             Node* new_node = new ImageNode(file_path);
+            NodeGui::get().m_node_manager->addNode(new_node);
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+
+    ////////////////////////////////////////////
+    ///// Draw dialog to select video file /////
+    ////////////////////////////////////////////
+    if (ImGuiFileDialog::Instance()->Display("SelectVideoDlgkey", ImGuiWindowFlags_NoCollapse, dialog_min_size, dialog_max_size))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string file_path = ImGuiFileDialog::Instance()->GetFilePathName();
+
+            Node* new_node = new VideoNode(file_path);
             NodeGui::get().m_node_manager->addNode(new_node);
         }
 

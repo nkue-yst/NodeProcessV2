@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/22
+ * Edited:  2023/08/05
  **********/
 
 #include "MenuItem_File.h"
@@ -26,7 +26,8 @@ void MenuItem_File::draw()
         // Open dialog to select video file
         if (ImGui::MenuItem("Open Video file"))
         {
-
+            const char* filters = "Video files (*.mp4 *.mov){.mp4,.mov}";
+            ImGuiFileDialog::Instance()->OpenDialog("SelectVideoDlgkey", "Select Video File", filters, ".");
         }
 
         ImGui::Spacing();

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/04
+ * Edited:  2023/08/05
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -24,6 +24,13 @@ void MenuItem_ImageVideo::draw()
         {
             const char* filters = "Image files (*.png *.jpg *.jpeg){.png,.jpg,.jpeg}";
             ImGuiFileDialog::Instance()->OpenDialog("SelectImageDlgkey", "Select Image File", filters, ".");
+        }
+
+        // Create new VideoNode
+        if (ImGui::MenuItem("VideoSource"))
+        {
+            const char* filters = "Video files (*.mp4 *.mov){.mp4,.mov}";
+            ImGuiFileDialog::Instance()->OpenDialog("SelectVideoDlgkey", "Select Video File", filters, ".");
         }
 
         ImGui::Spacing();
