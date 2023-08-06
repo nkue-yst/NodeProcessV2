@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/05
- * Edited:  2023/08/05
+ * Edited:  2023/08/07
  **********/
 
 #include "NodeGui.h"
@@ -126,6 +126,25 @@ void NodeGui::loop()
         ////////////////////////
         {
             int32_t start_id, end_id;
+
+            // Drag for new link
+            if (ImNodes::IsLinkStarted(&start_id))
+            {
+                Pin* start_pin = this->m_pin_manager->getPin(start_id);
+                uint32_t color = PIN_COLOR(start_pin->m_type);
+
+                ImNodes::PushColorStyle(ImNodesCol_Link, color);
+                ImNodes::PushColorStyle(ImNodesCol_LinkHovered, color);
+                ImNodes::PushColorStyle(ImNodesCol_LinkSelected, color);
+            }
+
+            // Drop for new link
+            if (ImNodes::IsLinkDropped(&start_id))
+            {
+                ImNodes::PopColorStyle();
+                ImNodes::PopColorStyle();
+                ImNodes::PopColorStyle();
+            }
 
             // New created link
             if (ImNodes::IsLinkCreated(&start_id, &end_id))
