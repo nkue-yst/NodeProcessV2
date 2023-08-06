@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/21
- * Edited:  2023/07/30
+ * Edited:  2023/08/06
  **********/
 
 #include "GrayScallingNode.h"
@@ -14,7 +14,6 @@ GrayScallingNode::GrayScallingNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "GrayScalling";
-    this->m_color = NodeColor::GraphicsProcessingNode;
 
     this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 

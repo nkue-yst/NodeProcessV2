@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/29
- * Edited:  2023/07/30
+ * Edited:  2023/08/06
  **********/
 
 #include "BinarizationNode.h"
@@ -15,7 +15,6 @@ BinarizationNode::BinarizationNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Binarization";
-    this->m_color = NodeColor::GraphicsProcessingNode;
 
     this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 

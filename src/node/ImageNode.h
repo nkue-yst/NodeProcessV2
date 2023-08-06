@@ -1,11 +1,10 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/05/26
- * Edited:  2023/07/21
+ * Edited:  2023/08/06
  **********/
 
-#ifndef __IMAGE_NODE_H__
-#define __IMAGE_NODE_H__
+#pragma once
 
 #include "GraphicsNode.h"
 
@@ -20,5 +19,3 @@ private:
     void drawContent() override;
     bool loadData(std::string file_path);
 };
-
-#endif

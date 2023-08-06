@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/04
- * Edited:  2023/08/05
+ * Edited:  2023/08/06
  **********/
 
  #include "VideoNode.h"
@@ -15,7 +15,7 @@ VideoNode::VideoNode(std::string file_path)
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Video Source";
-    this->m_color = NodeColor::VideoSourceNode;
+    this->m_type = NodeType_VideoSource;
 
     ///////////////////////////
     ///// Initialize Pins /////

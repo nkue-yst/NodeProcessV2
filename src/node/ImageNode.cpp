@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/05/26
- * Edited:  2023/07/29
+ * Edited:  2023/08/06
  **********/
 
 #include "ImageNode.h"
@@ -20,7 +20,7 @@ ImageNode::ImageNode(std::string file_path)
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Image Source";
-    this->m_color = NodeColor::ImageSourceNode;
+    this->m_type = NodeType_ImageSource;
 
     ///////////////////////////
     ///// Initialize Pins /////

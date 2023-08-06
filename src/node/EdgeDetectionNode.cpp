@@ -1,12 +1,13 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/03
- * Edited:  2023/08/04
+ * Edited:  2023/08/06
  **********/
 
  #include "EdgeDetectionNode.h"
 
  #include "Logger.h"
+ #include "Pin.h"
 
 EdgeDetectionNode::EdgeDetectionNode()
 {
@@ -17,7 +18,6 @@ EdgeDetectionNode::EdgeDetectionNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "EdgeDetection";
-    this->m_color = NodeColor::GraphicsProcessingNode;
 
     this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 
@@ -96,9 +96,7 @@ void EdgeDetectionNode::drawInPins()
     // Draw pin for input image
     auto pin_iter = this->m_in_pins.begin();
     Pin* pin = *(pin_iter++);
-    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
-    ImGui::TextUnformatted(pin->m_name.c_str());
-    ImNodes::EndInputAttribute();
+    pin->drawAsInput();
 
     // Threshold settings
     auto unify = [this]() -> void
@@ -112,9 +110,7 @@ void EdgeDetectionNode::drawInPins()
     };
 
     pin = *(pin_iter++);
-    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
-    ImGui::TextUnformatted(pin->m_name.c_str());
-    ImNodes::EndInputAttribute();
+    pin->drawAsInput();
 
     if (pin->m_connected_pins.empty())
     {
@@ -130,9 +126,7 @@ void EdgeDetectionNode::drawInPins()
     }
 
     pin = *(pin_iter++);
-    ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
-    ImGui::TextUnformatted(pin->m_name.c_str());
-    ImNodes::EndInputAttribute();
+    pin->drawAsInput();
 
     if (pin->m_connected_pins.empty())
     {

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/31
- * Edited:  2023/07/31
+ * Edited:  2023/08/06
  **********/
 
 #include "HistogramNode.h"
@@ -17,12 +17,12 @@
 #define HIST_HEIGHT 150
 
 HistogramNode::HistogramNode()
+    : GraphicsAnalyzeNode()
 {
     ///////////////////////////
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Histgram";
-    this->m_color = NodeColor::GraphicsAnalyzeNode;
 
     ///////////////////////////
     ///// Initialize Pins /////

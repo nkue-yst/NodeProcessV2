@@ -1,11 +1,12 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/08/04
+ * Edited:  2023/08/06
  **********/
 
 #include "Node.h"
 
+#include <algorithm>
 #include <string>
 
 #include "imnodes.h"
@@ -14,11 +15,12 @@
 #include "NodeGui.h"
 #include "TimeProfiler.h"
 
-Node::Node()
+Node::Node(NodeType type)
     : m_id(0)
     , m_name("undefined")
     , m_priority(-1)
     , m_need_update(false)
+    , m_type(type)
 {
 }
 
@@ -35,9 +37,15 @@ void Node::draw()
     ///// Set node style /////
     //////////////////////////
     ImNodesStyle& style = ImNodes::GetStyle();
-    style.Colors[ImNodesCol_TitleBar]         = IM_COL32(this->m_color.r, this->m_color.g, this->m_color.b, 255);
-    style.Colors[ImNodesCol_TitleBarHovered]  = IM_COL32(this->m_color.r * 1.2, this->m_color.g * 1.2, this->m_color.b * 1.2, 255);
-    style.Colors[ImNodesCol_TitleBarSelected] = IM_COL32(this->m_color.r * 1.5, this->m_color.g * 1.5, this->m_color.b * 1.5, 255);
+    uint32_t base_color = NODE_COLOR(this->m_type);
+    style.Colors[ImNodesCol_TitleBar]         = base_color;
+    style.Colors[ImNodesCol_TitleBarHovered]  = multiplyIM_COL(base_color, 1.1);
+    style.Colors[ImNodesCol_TitleBarSelected] = multiplyIM_COL(base_color, 1.2);
+
+    base_color = IM_COL32(94, 95, 90, 200);
+    style.Colors[ImNodesCol_NodeBackground]         = base_color;;
+    style.Colors[ImNodesCol_NodeBackgroundHovered]  = multiplyIM_COL(base_color, 1.1);
+    style.Colors[ImNodesCol_NodeBackgroundSelected] = multiplyIM_COL(base_color, 1.2);
 
     ImNodes::BeginNode(this->m_id);
 
@@ -94,9 +102,7 @@ void Node::drawInPins()
 {
     for (auto pin : this->m_in_pins)
     {
-        ImNodes::BeginInputAttribute(pin->m_id, pin->getShape());
-        ImGui::TextUnformatted(pin->m_name.c_str());
-        ImNodes::EndInputAttribute();
+        pin->drawAsInput();
     }
 }
 
@@ -104,10 +110,6 @@ void Node::drawOutPins()
 {
     for (auto pin : this->m_out_pins)
     {
-        ImNodes::BeginOutputAttribute(pin->m_id, pin->getShape());
-        const float label_width = ImGui::CalcTextSize(pin->m_name.c_str()).x;
-        ImGui::Indent(95.f - label_width);
-        ImGui::TextUnformatted(pin->m_name.c_str());
-        ImNodes::EndOutputAttribute();
+        pin->drawAsOutput();
     }
 }

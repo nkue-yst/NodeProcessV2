@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "Node.h"
+#include "Pin.h"
 
 #include "HistogramNode.h"
 #include "ImageNode.h"
@@ -178,7 +179,17 @@ void NodeGui::loop()
 
             if (Link::isValid(link))
             {
+                Pin* start_pin = this->m_pin_manager->getPin(link.first);
+                uint32_t color = PIN_COLOR(start_pin->m_type);
+                ImNodes::PushColorStyle(ImNodesCol_Link, color);
+                ImNodes::PushColorStyle(ImNodesCol_LinkHovered, color);
+                ImNodes::PushColorStyle(ImNodesCol_LinkSelected, color);
+
                 ImNodes::Link(i, link.first, link.second);
+
+                ImNodes::PopColorStyle();
+                ImNodes::PopColorStyle();
+                ImNodes::PopColorStyle();
             }
         }
 

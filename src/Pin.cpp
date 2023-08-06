@@ -1,14 +1,14 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/07/21
+ * Edited:  2023/08/06
  **********/
 
 #include "Pin.h"
 
 #include "Logger.h"
-#include "Node.h"
 #include "NodeGui.h"
+#include "NodeStyle.h"
 
 Pin::Pin(Node* owner, int32_t id, Pin::Type type, std::string name)
     : m_id(id)
@@ -22,6 +22,34 @@ Pin::Pin(Node* owner, int32_t id, Pin::Type type, std::string name)
 Pin::~Pin()
 {
     DEBUG("Destroy pin.  (id: " + std::to_string(this->m_id) + ", name: " + this->m_name + ")");
+}
+
+void Pin::drawAsInput()
+{
+    ImNodes::PushColorStyle(ImNodesCol_Pin, PIN_COLOR(this->m_type));
+    ImNodes::PushColorStyle(ImNodesCol_PinHovered, multiplyIM_COL(PIN_COLOR(this->m_type), 1.2));
+
+    ImNodes::BeginInputAttribute(this->m_id, this->getShape());
+    ImGui::TextUnformatted(this->m_name.c_str());
+    ImNodes::EndInputAttribute();
+
+    ImNodes::PopColorStyle();
+    ImNodes::PopColorStyle();
+}
+
+void Pin::drawAsOutput()
+{
+    ImNodes::PushColorStyle(ImNodesCol_Pin, PIN_COLOR(this->m_type));
+    ImNodes::PushColorStyle(ImNodesCol_PinHovered, multiplyIM_COL(PIN_COLOR(this->m_type), 1.2));
+
+    ImNodes::BeginOutputAttribute(this->m_id, this->getShape());
+    const float label_width = ImGui::CalcTextSize(this->m_name.c_str()).x;
+    ImGui::Indent(95.f - label_width);
+    ImGui::TextUnformatted(this->m_name.c_str());
+    ImNodes::EndOutputAttribute();
+
+    ImNodes::PopColorStyle();
+    ImNodes::PopColorStyle();
 }
 
 int Pin::getShape()

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/08/04
+ * Edited:  2023/08/06
  **********/
 
 #pragma once
@@ -22,7 +22,7 @@
 class Node
 {
 public:
-    Node();
+    Node(NodeType type = NodeType_UNDEFINED);
     virtual ~Node();
 
     void draw();
@@ -73,5 +73,5 @@ public:
     bool m_need_update;
 
 protected:
-    Color m_color;
+    NodeType m_type;
 };

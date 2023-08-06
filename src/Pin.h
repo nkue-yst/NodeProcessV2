@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/04
+ * Edited:  2023/08/06
  **********/
 
 #ifndef __PIN_H__
@@ -11,10 +11,14 @@
 #include <string>
 #include <vector>
 
+#include "imgui.h"
+
+#include "Node.h"
+
 class Pin
 {
 public:
-    enum class Type
+    enum Type
     {
         RGB,         // カラー情報
         VALUE,       // 数値
@@ -34,6 +38,9 @@ public:
     {
         return this->m_type != rhs;
     }
+
+    void drawAsInput();
+    void drawAsOutput();
 
     int getShape();
 
