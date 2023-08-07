@@ -20,21 +20,18 @@
 class GraphicsNode : public Node
 {
 public:
-    virtual cv::Mat getContent(Pin::Type pin_type) = 0;
-
     virtual ~GraphicsNode()
     {
         /////////////////////////////
         ///// Release resources /////
         /////////////////////////////
-        this->m_image.release();
         glDeleteTextures(1, &this->m_gl_texture);
     }
 
     int32_t m_width  = 100;
     int32_t m_height = 100;
 
-    cv::Mat m_image;
+    ///cv::Mat m_image;
     GLuint m_gl_texture;
 };
 

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/05/26
- * Edited:  2023/08/06
+ * Edited:  2023/08/07
  **********/
 
 #include "ImageNode.h"
@@ -40,29 +40,12 @@ ImageNode::ImageNode(std::string file_path)
     }
 }
 
-cv::Mat ImageNode::getContent(Pin::Type pin_type)
-{
-    cv::Mat content;
-
-    if (pin_type == Pin::Type::RGB)
-    {
-        content = this->m_image;
-    }
-    else
-    {
-        ERROR("Wrong type of pin connected.");
-        NodeGui::get().abort();
-    }
-
-    return content;
-}
-
 void ImageNode::drawContent()
 {
     if (this->m_need_update)
     {
         glDeleteTextures(1, &this->m_gl_texture);
-        this->m_gl_texture = convert_func(&this->m_image);
+        this->m_gl_texture = convert_func(&this->m_content->m_image);
 
         this->m_need_update = false;
     }
@@ -75,12 +58,12 @@ bool ImageNode::loadData(std::string file_path)
     // When `file_path` is null, generate and set empty image
     if (file_path.empty())
     {
-        this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
+        this->m_content->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
         return true;
     }
 
     // Load image data
-    this->m_image = cv::imread(file_path);
+    this->m_content->m_image = cv::imread(file_path);
 
     // Set drawing size
     float resize_rate = 100.f / std::max(this->m_width, this->m_height);

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/01
- * Edited:  2023/08/06
+ * Edited:  2023/08/07
  **********/
 
 #pragma once
@@ -19,6 +19,7 @@ typedef uint32_t PinColor;
 
 enum NodeType_
 {
+    NodeType_Constant,
     NodeType_GraphicsAnalyze,
     NodeType_GraphicsProcessing,
     NodeType_ImageSource,
@@ -56,18 +57,19 @@ namespace
 {
     constexpr NodeColor node_color[] =
     {
-        IM_COL32(  32,  32,  32, 200 ),  // GraphicsAnalyze
-        IM_COL32(  64, 128, 128, 200 ),  // GraphicsProcessing
-        IM_COL32(  64, 128,  64, 200 ),  // ImageSource
-        IM_COL32(  64,  64, 128, 200 ),  // VideoSource
+        IM_COL32( 142, 209, 224, 200 ),  // Constant
+        IM_COL32(  70, 120,  82, 200 ),  // GraphicsAnalyze
+        IM_COL32( 183,  37,  71, 200 ),  // GraphicsProcessing
+        IM_COL32(  27,  61, 176, 200 ),  // ImageSource
+        IM_COL32( 255, 127,  80, 200 ),  // VideoSource
 
         IM_COL32(0, 0, 0, 0),            // UNDEFINED
     };
 
     constexpr PinColor pin_color[] =
     {
-        IM_COL32(  72, 114, 191, 255 ),  // RGB
-        IM_COL32( 255, 215,   0, 255 ),  // Value
+        IM_COL32( 255, 255, 251, 255 ),  // RGB
+        IM_COL32( 255, 235,  88, 255 ),  // Value
 
         IM_COL32(0, 0, 0, 0),            // UNDEFINED
     };

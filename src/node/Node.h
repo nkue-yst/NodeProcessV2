@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/08/06
+ * Edited:  2023/08/07
  **********/
 
 #pragma once
@@ -16,6 +16,7 @@
 #include "GL/gl.h"
 #include "opencv2/opencv.hpp"
 
+#include "NodeContent.h"
 #include "NodeStyle.h"
 #include "Pin.h"
 
@@ -25,7 +26,29 @@ public:
     Node(NodeType type = NodeType_UNDEFINED);
     virtual ~Node();
 
-    void draw();
+    ///////////////////////////////////
+    ///// Get content by template /////
+    ///////////////////////////////////
+    NodeContent* m_content;
+
+    template<typename T>
+    T getContent(Pin::Type pin_type);
+
+    template<> cv::Mat getContent(Pin::Type pin_type)
+    {
+        if (pin_type == Pin::Type::RGB)
+        {
+            return this->m_content->m_image;
+        }
+    }
+
+    template<> int32_t getContent(Pin::Type pin_type)
+    {
+        if (pin_type == Pin::Type::VALUE)
+        {
+            return this->m_content->m_value;
+        }
+    }
 
     // cv::MatからGLuintへの変換
     static GLuint convert_func(cv::Mat* mat)
@@ -53,6 +76,8 @@ public:
         return texture_id;
     };
 
+    void draw();
+
     void setDirtyFlag(int32_t new_priority = -1);
 
 protected:
@@ -73,5 +98,8 @@ public:
     bool m_need_update;
 
 protected:
+    uint32_t m_node_width  = 100;
+    uint32_t m_node_height = 100;
+
     NodeType m_type;
 };

@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/03
- * Edited:  2023/08/06
+ * Edited:  2023/08/08
  **********/
 
  #include "EdgeDetectionNode.h"
@@ -19,7 +19,7 @@ EdgeDetectionNode::EdgeDetectionNode()
     ///////////////////////////
     this->m_name = "EdgeDetection";
 
-    this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
+    this->m_content->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
 
     ///////////////////////////
     ///// Initialize Pins /////
@@ -41,30 +41,18 @@ EdgeDetectionNode::EdgeDetectionNode()
     this->m_out_pins.push_back(new_pin);
 }
 
-cv::Mat EdgeDetectionNode::getContent(Pin::Type pin_type)
-{
-    cv::Mat content;
-
-    if (pin_type == Pin::Type::RGB)
-    {
-        content = this->m_image;
-    }
-    else
-    {
-        ERROR("Wrong type of pin connected.");
-        NodeGui::get().abort();
-    }
-
-    return content;
-}
-
 void EdgeDetectionNode::drawContent()
 {
     if (this->m_need_update)
     {
-        this->m_image.release();
+        this->m_content->m_image.release();
 
-        Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);    // Connected pin
+        ////////////////////////////////
+        ///// Input from 'RGB' pin /////
+        ////////////////////////////////
+        auto pin_iter = this->m_in_pins.begin();
+        Pin* pin = *(pin_iter++);
+        Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(pin->m_id);
 
         if (pair_pin)
         {
@@ -72,18 +60,37 @@ void EdgeDetectionNode::drawContent()
 
             if (connected_node)    // If the connected node is valid
             {
-                this->m_image = connected_node->getContent(Pin::Type::RGB);
+                this->m_content->m_image = connected_node->getContent<cv::Mat>(Pin::Type::RGB);
             }
         }
         else
         {
-            this->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
+            this->m_content->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
+        }
+
+        ///////////////////////////////////
+        ///// Input from 'VALUE' pins /////
+        ///////////////////////////////////
+        for (int i = 0; i < 2; ++i)
+        {
+            pin = *(pin_iter++);
+            pair_pin = NodeGui::get().m_pin_manager->getPair(pin->m_id);
+
+            if (pair_pin)
+            {
+                Node* node = pair_pin->m_owner;
+                
+                if (node)
+                {
+                    this->m_threshold[i] = node->getContent<int32_t>(Pin::Type::VALUE);
+                }
+            }
         }
 
         this->process();
 
         glDeleteTextures(1, &this->m_gl_texture);
-        this->m_gl_texture = convert_func(&this->m_image);
+        this->m_gl_texture = convert_func(&this->m_content->m_image);
 
         this->m_need_update = false;
     }
@@ -98,17 +105,6 @@ void EdgeDetectionNode::drawInPins()
     Pin* pin = *(pin_iter++);
     pin->drawAsInput();
 
-    // Threshold settings
-    auto unify = [this]() -> void
-    {
-        if (this->m_threshold[0] > this->m_threshold[1])
-        {
-            int32_t temp = this->m_threshold[0];
-            this->m_threshold[0] = this->m_threshold[1];
-            this->m_threshold[1] = temp;
-        }
-    };
-
     pin = *(pin_iter++);
     pin->drawAsInput();
 
@@ -116,9 +112,8 @@ void EdgeDetectionNode::drawInPins()
     {
         ImGui::PushID(pin->m_id);
         ImGui::PushItemWidth(this->m_width);
-        if (ImGui::SliderInt("", &this->m_threshold[0], 0, 255))
+        if (ImGui::SliderInt("", &this->m_threshold[0], 0, 1000))
         {
-            unify();
             this->setDirtyFlag();
         }
         ImGui::PopItemWidth();
@@ -132,9 +127,8 @@ void EdgeDetectionNode::drawInPins()
     {
         ImGui::PushID(pin->m_id);
         ImGui::PushItemWidth(this->m_width);
-        if (ImGui::SliderInt("", &this->m_threshold[1], 0, 255))
+        if (ImGui::SliderInt("", &this->m_threshold[1], 0, 1000))
         {
-            unify();
             this->setDirtyFlag();
         }
         ImGui::PopItemWidth();
@@ -144,14 +138,18 @@ void EdgeDetectionNode::drawInPins()
 
 void EdgeDetectionNode::process()
 {
-    if (!this->m_image.empty())
+    if (!this->m_content->m_image.empty())
     {
-        if (this->m_image.channels() != 1)
+        if (this->m_content->m_image.channels() != 1)
         {
-            cv::cvtColor(this->m_image, this->m_image, cv::COLOR_BGR2GRAY);
+            cv::cvtColor(this->m_content->m_image, this->m_content->m_image, cv::COLOR_BGR2GRAY);
         }
 
-        cv::Canny(this->m_image, this->m_image, this->m_threshold[0], this->m_threshold[1]);
+        double threshold[2];
+        threshold[0] = std::min(this->m_threshold[0], this->m_threshold[1]);
+        threshold[1] = std::max(this->m_threshold[0], this->m_threshold[1]);
+
+        cv::Canny(this->m_content->m_image, this->m_content->m_image, threshold[0], threshold[1]);
     }
 }
 

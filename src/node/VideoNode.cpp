@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/04
- * Edited:  2023/08/06
+ * Edited:  2023/08/07
  **********/
 
  #include "VideoNode.h"
@@ -35,37 +35,20 @@ VideoNode::VideoNode(std::string file_path)
     }
 }
 
-cv::Mat VideoNode::getContent(Pin::Type pin_type)
-{
-    cv::Mat content;
-
-    if (pin_type == Pin::Type::RGB)
-    {
-        content = this->m_image;
-    }
-    else
-    {
-        ERROR("Wrong type of pin connected.");
-        NodeGui::get().abort();
-    }
-
-    return content;
-}
-
 void VideoNode::drawContent()
 {
     // Update frame image
     if (this->m_playing)
     {
-        this->m_video.read(this->m_image);
-        if (this->m_image.empty())
+        this->m_video.read(this->m_content->m_image);
+        if (this->m_content->m_image.empty())
         {
             this->m_video.set(cv::CAP_PROP_POS_FRAMES, 0);
-            this->m_video.read(this->m_image);
+            this->m_video.read(this->m_content->m_image);
         }
 
         glDeleteTextures(1, &this->m_gl_texture);
-        this->m_gl_texture = convert_func(&this->m_image);
+        this->m_gl_texture = convert_func(&this->m_content->m_image);
 
         this->setDirtyFlag();
     }
@@ -94,7 +77,7 @@ bool VideoNode::loadData(std::string file_path)
     // When `file_path` is null, generate and set empty image
     if (file_path.empty())
     {
-        this->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
+        this->m_content->m_image = cv::Mat::zeros(100, 100, CV_8UC3);
         return true;
     }
 

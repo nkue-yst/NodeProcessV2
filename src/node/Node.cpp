@@ -22,10 +22,12 @@ Node::Node(NodeType type)
     , m_need_update(false)
     , m_type(type)
 {
+    this->m_content = new NodeContent();
 }
 
 Node::~Node()
 {
+    delete this->m_content;
 }
 
 void Node::draw()

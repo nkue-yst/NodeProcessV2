@@ -66,6 +66,8 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/MenuItem_Audio.cpp
 	${MAIN_SRC_DIR}/MenuItem_File.cpp
 	${MAIN_SRC_DIR}/MenuItem_ImageVideo.cpp
+	${MAIN_SRC_DIR}/MenuItem_Other.cpp
+	${MAIN_SRC_DIR}/NodeContent.cpp
 	${MAIN_SRC_DIR}/NodeGui.cpp
 	${MAIN_SRC_DIR}/NodeManager.cpp
 	${MAIN_SRC_DIR}/Pin.cpp
@@ -73,6 +75,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/FileDialog.cpp
 
 	${MAIN_SRC_DIR}/node/BinarizationNode.cpp
+	${MAIN_SRC_DIR}/node/Constant.cpp
 	${MAIN_SRC_DIR}/node/EdgeDetectionNode.cpp
 	${MAIN_SRC_DIR}/node/GrayScallingNode.cpp
 	${MAIN_SRC_DIR}/node/HistogramNode.cpp

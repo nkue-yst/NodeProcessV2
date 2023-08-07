@@ -1,12 +1,13 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/04
+ * Edited:  2023/08/07
  **********/
 
 #include "PinManager.h"
 
 #include "Logger.h"
+#include "Node.h"
 
 PinManager::PinManager()
 {

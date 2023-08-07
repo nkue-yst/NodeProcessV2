@@ -1,11 +1,10 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/04
+ * Edited:  2023/08/07
  **********/
 
-#ifndef __PIN_MANAGER_H__
-#define __PIN_MANAGER_H__
+#pragma once
 
 #include <algorithm>
 #include <cstdint>
@@ -13,7 +12,6 @@
 #include <utility>
 #include <vector>
 
-#include "Node.h"
 #include "Pin.h"
 
 struct Link
@@ -32,7 +30,7 @@ public:
     ~PinManager();
 
     [[nodiscard]]
-    Pin* newPin(Node* owner, Pin::Type type, std::string name);
+    Pin* newPin(class Node* owner, Pin::Type type, std::string name);
 
     void unusePin(int32_t id);
 
@@ -49,5 +47,3 @@ public:
 
     std::set<int32_t> m_used_id;
 };
-
-#endif

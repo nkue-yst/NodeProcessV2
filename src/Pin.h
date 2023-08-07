@@ -1,11 +1,10 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/06
+ * Edited:  2023/08/07
  **********/
 
-#ifndef __PIN_H__
-#define __PIN_H__
+#pragma once
 
 #include <cstdint>
 #include <string>
@@ -13,17 +12,16 @@
 
 #include "imgui.h"
 
-#include "Node.h"
-
 class Pin
 {
 public:
+    // Pin type for input or output data
     enum Type
     {
         RGB,         // カラー情報
         VALUE,       // 数値
     
-        UNDEFINED    // 未定義
+        UNDEFINED,   // 未定義
     };
 
     Pin(class Node* owner, int32_t id, Type type, std::string name);
@@ -52,5 +50,3 @@ public:
 
     class Node* m_owner;
 };
-
-#endif

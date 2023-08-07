@@ -47,7 +47,7 @@ void HistogramNode::drawContent()
 
             if (connected_node)
             {
-                input_image = connected_node->getContent(Pin::Type::RGB);
+                input_image = connected_node->getContent<cv::Mat>(Pin::Type::RGB);
             }
         }
         else
