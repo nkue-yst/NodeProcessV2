@@ -20,6 +20,38 @@
 #include "NodeStyle.h"
 #include "Pin.h"
 
+namespace detail
+{
+    template<typename T>
+    inline T getContent(NodeContent* body, Pin::Type pin_type);
+    
+    template<>
+    inline cv::Mat getContent(NodeContent* body, Pin::Type pin_type)
+    {
+        if (pin_type == Pin::Type::RGB)
+        {
+            return body->m_image;
+        }
+        else
+        {
+            return cv::Mat();
+        }
+    }
+
+    template<>
+    inline int32_t getContent(NodeContent* body, Pin::Type pin_type)
+    {
+        if (pin_type == Pin::Type::VALUE)
+        {
+            return body->m_value;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+}
+
 class Node
 {
 public:
@@ -32,22 +64,9 @@ public:
     NodeContent* m_content;
 
     template<typename T>
-    T getContent(Pin::Type pin_type);
-
-    template<> cv::Mat getContent(Pin::Type pin_type)
+    T getContent(Pin::Type pin_type)
     {
-        if (pin_type == Pin::Type::RGB)
-        {
-            return this->m_content->m_image;
-        }
-    }
-
-    template<> int32_t getContent(Pin::Type pin_type)
-    {
-        if (pin_type == Pin::Type::VALUE)
-        {
-            return this->m_content->m_value;
-        }
+        return detail::getContent<T>(this->m_content, pin_type);
     }
 
     // cv::MatからGLuintへの変換
