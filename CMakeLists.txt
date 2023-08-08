@@ -75,6 +75,7 @@ set(NP_SOURCES
 	${MAIN_SRC_DIR}/FileDialog.cpp
 
 	${MAIN_SRC_DIR}/node/BinarizationNode.cpp
+	${MAIN_SRC_DIR}/node/BreakRGBNode.cpp
 	${MAIN_SRC_DIR}/node/Constant.cpp
 	${MAIN_SRC_DIR}/node/EdgeDetectionNode.cpp
 	${MAIN_SRC_DIR}/node/GrayScallingNode.cpp
@@ -112,3 +113,11 @@ else()
 endif()
 
 target_link_libraries(${PROJECT_NAME} OpenGL::GL ${OpenCV_LIBRARIES} ${SDL2_LIBRARIES})
+
+if(MSVC)
+	if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+		string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+	else()
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+	endif()
+endif()

@@ -29,12 +29,47 @@ namespace detail
     template<>
     inline cv::Mat getContent(NodeContent* body, Pin::Type pin_type)
     {
-        if (pin_type == Pin::Type::RGB)
+        cv::Mat mat = body->m_image.clone();
+
+        switch (pin_type)
         {
-            return body->m_image;
-        }
-        else
-        {
+        case Pin::Type::RGB:
+            return mat;
+
+        case Pin::Type::Red:
+            for (uint32_t y = 0; y < mat.rows; ++y)
+            {
+                for (uint32_t x = 0; x < mat.cols; ++x)
+                {
+                    cv::Vec3b* data = mat.ptr<cv::Vec3b>(y);
+                    data[x] = cv::Vec3b(0, 0, data[x][2]);
+                }
+            }
+            return mat;
+
+        case Pin::Type::Green:
+            for (uint32_t y = 0; y < mat.rows; ++y)
+            {
+                for (uint32_t x = 0; x < mat.cols; ++x)
+                {
+                    cv::Vec3b* data = mat.ptr<cv::Vec3b>(y);
+                    data[x] = cv::Vec3b(0, data[x][1], 0);
+                }
+            }
+            return mat;
+
+        case Pin::Type::Blue:
+            for (uint32_t y = 0; y < mat.rows; ++y)
+            {
+                for (uint32_t x = 0; x < mat.cols; ++x)
+                {
+                    cv::Vec3b* data = mat.ptr<cv::Vec3b>(y);
+                    data[x] = cv::Vec3b(data[x][0], 0, 0);
+                }
+            }
+            return mat;
+
+        default:
             return cv::Mat();
         }
     }

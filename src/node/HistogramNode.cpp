@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/31
- * Edited:  2023/08/08
+ * Edited:  2023/08/09
  **********/
 
 #include "HistogramNode.h"
@@ -47,7 +47,7 @@ void HistogramNode::drawContent()
 
             if (connected_node)
             {
-                input_image = connected_node->getContent<cv::Mat>(Pin::Type::RGB);
+                this->m_content->m_image = connected_node->getContent<cv::Mat>(pair_pin->m_type);
             }
         }
         else

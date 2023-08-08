@@ -114,7 +114,7 @@ bool PinManager::addLink(std::pair<int32_t, int32_t> new_link)
     Pin* parent_pin = this->getPin(new_link.first);
     Pin* child_pin = this->getPin(new_link.second);
 
-    if (parent_pin->m_type != child_pin->m_type)
+    if (!parent_pin->canConnect(*child_pin))
     {
         return false;
     }

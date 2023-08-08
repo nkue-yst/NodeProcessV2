@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/01
- * Edited:  2023/08/07
+ * Edited:  2023/08/09
  **********/
 
 #pragma once
@@ -23,6 +23,7 @@ enum NodeType_
     NodeType_GraphicsAnalyze,
     NodeType_GraphicsProcessing,
     NodeType_ImageSource,
+    NodeType_Utility,
     NodeType_VideoSource,
 
     NodeType_UNDEFINED,
@@ -31,6 +32,9 @@ enum NodeType_
 enum PinType_
 {
     PinType_RGB,
+    PinType_Red,
+    PinType_Green,
+    PinType_Blue,
     PinType_Value,
 
     PinType_UNDEFINED,
@@ -61,6 +65,7 @@ namespace
         IM_COL32(  70, 120,  82, 200 ),  // GraphicsAnalyze
         IM_COL32( 183,  37,  71, 200 ),  // GraphicsProcessing
         IM_COL32(  27,  61, 176, 200 ),  // ImageSource
+        IM_COL32(  50,  50,  50, 200 ),  // Utility
         IM_COL32( 255, 127,  80, 200 ),  // VideoSource
 
         IM_COL32(0, 0, 0, 0),            // UNDEFINED
@@ -69,6 +74,9 @@ namespace
     constexpr PinColor pin_color[] =
     {
         IM_COL32( 255, 255, 251, 255 ),  // RGB
+        IM_COL32( 255,   0,   0, 255 ),  // Red
+        IM_COL32(   0, 255,   0, 255 ),  // Green
+        IM_COL32(   0,   0, 255, 255 ),  // Blue
         IM_COL32( 255, 235,  88, 255 ),  // Value
 
         IM_COL32(0, 0, 0, 0),            // UNDEFINED

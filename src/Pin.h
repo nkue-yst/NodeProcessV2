@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/07
+ * Edited:  2023/08/09
  **********/
 
 #pragma once
@@ -18,8 +18,11 @@ public:
     // Pin type for input or output data
     enum Type
     {
-        RGB,         // カラー情報
-        VALUE,       // 数値
+        RGB,         // Color data
+        Red,         // Color data (red)
+        Green,       // Color data (green)
+        Blue,        // Color data (blue)
+        VALUE,       // Number value
     
         UNDEFINED,   // 未定義
     };
@@ -36,6 +39,8 @@ public:
     {
         return this->m_type != rhs;
     }
+
+    bool canConnect(Pin& pair_pin);
 
     void drawAsInput();
     void drawAsOutput();

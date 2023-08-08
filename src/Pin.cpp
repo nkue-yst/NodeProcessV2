@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/08
+ * Edited:  2023/08/09
  **********/
 
 #include "Pin.h"
@@ -22,6 +22,19 @@ Pin::Pin(class Node* owner, int32_t id, Pin::Type type, std::string name)
 Pin::~Pin()
 {
     DEBUG("Destroy pin.  (id: " + std::to_string(this->m_id) + ", name: " + this->m_name + ")");
+}
+
+bool Pin::canConnect(Pin& pair_pin)
+{
+    Pin::Type type = this->m_type;
+    Pin::Type pair_type = pair_pin.m_type;
+
+    if (type <= Pin::Type::Blue && pair_type <= Pin::Type::Blue)
+    {
+        return true;
+    }
+
+    return type == pair_type;
 }
 
 void Pin::drawAsInput()
@@ -60,6 +73,12 @@ int Pin::getShape()
     {
     case Pin::Type::RGB:
         pin_shape = ImNodesPinShape_CircleFilled;
+        break;
+
+    case Pin::Type::Red:
+    case Pin::Type::Green:
+    case Pin::Type::Blue:
+        pin_shape = ImNodesPinShape_Circle;
         break;
 
     case Pin::Type::VALUE:
