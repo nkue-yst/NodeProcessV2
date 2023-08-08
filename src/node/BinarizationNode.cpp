@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/29
- * Edited:  2023/08/06
+ * Edited:  2023/08/08
  **********/
 
 #include "BinarizationNode.h"
@@ -51,10 +51,11 @@ void BinarizationNode::drawContent()
         }
         else
         {
-            this->m_content->m_image = cv::Mat::zeros(this->m_width, this->m_height, CV_8UC3);
+            this->m_content->m_image = cv::Mat::zeros(this->m_initial_node_width, this->m_initial_node_width, CV_8UC3);
         }
 
         this->process();
+        this->resizeFrame();
 
         glDeleteTextures(1, &this->m_gl_texture);
         this->m_gl_texture = convert_func(&this->m_content->m_image);

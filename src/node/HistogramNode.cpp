@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/31
- * Edited:  2023/08/06
+ * Edited:  2023/08/08
  **********/
 
 #include "HistogramNode.h"
@@ -52,7 +52,7 @@ void HistogramNode::drawContent()
         }
         else
         {
-            input_image = cv::Mat::zeros(100, 100, CV_8UC3);
+            this->m_content->m_image = cv::Mat::zeros(this->m_initial_node_width, this->m_initial_node_width, CV_8UC3);
         }
 
         ////////////////////////////////

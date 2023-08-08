@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/08/07
+ * Edited:  2023/08/08
  **********/
 
 #pragma once
@@ -17,7 +17,9 @@
 
 #include "NodeContent.h"
 #include "NodeStyle.h"
-#include "Pin.h"
+
+class Pin;
+enum Pin::Type;
 
 namespace detail
 {
@@ -108,6 +110,9 @@ public:
     uint32_t m_id;
     std::string m_name;
 
+    const uint32_t m_initial_node_width;
+    uint32_t m_node_width;
+
     std::vector<class Pin*> m_in_pins;
     std::vector<class Pin*> m_out_pins;
 
@@ -116,8 +121,5 @@ public:
     bool m_need_update;
 
 protected:
-    uint32_t m_node_width  = 100;
-    uint32_t m_node_height = 100;
-
     NodeType m_type;
 };

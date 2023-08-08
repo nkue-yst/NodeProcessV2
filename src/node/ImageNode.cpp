@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/05/26
- * Edited:  2023/08/07
+ * Edited:  2023/08/08
  **********/
 
 #include "ImageNode.h"
@@ -66,9 +66,7 @@ bool ImageNode::loadData(std::string file_path)
     this->m_content->m_image = cv::imread(file_path);
 
     // Set drawing size
-    float resize_rate = 100.f / std::max(this->m_width, this->m_height);
-    this->m_width *= resize_rate;
-    this->m_height *= resize_rate;
+    this->resizeFrame();
 
     this->m_need_update = true;
 

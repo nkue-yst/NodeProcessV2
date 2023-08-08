@@ -23,7 +23,7 @@ ConstantInt::ConstantInt()
 void ConstantInt::drawContent()
 {
     ImGui::PushID(this->m_id);
-    ImGui::PushItemWidth(this->m_node_width);
+    ImGui::PushItemWidth(100.f);
 
     if (ImGui::DragInt("", &this->m_content->m_value, 1.f, INT32_MIN, INT32_MAX))
     {

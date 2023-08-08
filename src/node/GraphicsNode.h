@@ -1,11 +1,10 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/07/21
- * Edited:  2023/07/30
+ * Edited:  2023/08/08
  **********/
 
-#ifndef __GRAPHICS_NODE_H__
-#define __GRAPHICS_NODE_H__
+#pragma once
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -28,11 +27,23 @@ public:
         glDeleteTextures(1, &this->m_gl_texture);
     }
 
-    int32_t m_width  = 100;
-    int32_t m_height = 100;
+    void resizeFrame()
+    {
+        // Set drawing size
+        this->m_width  = this->m_content->m_image.size().width;
+        this->m_height = this->m_content->m_image.size().height;
+
+        float resize_rate = static_cast<float>(this->m_initial_node_width) / std::max(this->m_width, this->m_height);
+
+        this->m_width  *= resize_rate;
+        this->m_height *= resize_rate;
+
+        this->m_node_width = this->m_width;
+    }
+
+    int32_t m_width  = this->m_node_width;    // Drawing width
+    int32_t m_height = this->m_node_width;    // Drawing height
 
     ///cv::Mat m_image;
     GLuint m_gl_texture;
 };
-
-#endif

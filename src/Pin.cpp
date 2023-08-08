@@ -7,6 +7,7 @@
 #include "Pin.h"
 
 #include "Logger.h"
+#include "Node.h"
 #include "NodeStyle.h"
 
 Pin::Pin(class Node* owner, int32_t id, Pin::Type type, std::string name)
@@ -43,7 +44,7 @@ void Pin::drawAsOutput()
 
     ImNodes::BeginOutputAttribute(this->m_id, this->getShape());
     const float label_width = ImGui::CalcTextSize(this->m_name.c_str()).x;
-    ImGui::Indent(95.f - label_width);
+    ImGui::Indent(this->m_owner->m_node_width - label_width);
     ImGui::TextUnformatted(this->m_name.c_str());
     ImNodes::EndOutputAttribute();
 

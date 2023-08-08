@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/08
- * Edited:  2023/08/06
+ * Edited:  2023/08/08
  **********/
 
 #include "Node.h"
@@ -21,6 +21,8 @@ Node::Node(NodeType type)
     , m_priority(-1)
     , m_need_update(false)
     , m_type(type)
+    , m_node_width(120)
+    , m_initial_node_width(120)
 {
     this->m_content = new NodeContent();
 }
