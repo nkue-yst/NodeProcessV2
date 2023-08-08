@@ -52,7 +52,7 @@ void HistogramNode::drawContent()
         }
         else
         {
-            this->m_content->m_image = cv::Mat::zeros(this->m_initial_node_width, this->m_initial_node_width, CV_8UC3);
+            input_image = cv::Mat::zeros(100, 100, CV_8UC3);
         }
 
         ////////////////////////////////
