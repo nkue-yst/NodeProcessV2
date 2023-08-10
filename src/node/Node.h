@@ -106,7 +106,7 @@ public:
     }
 
     // cv::MatからGLuintへの変換
-    static GLuint convert_func(cv::Mat* mat)
+    inline virtual GLuint convert_func(cv::Mat* mat)
     {
         if (mat->empty())
         {
