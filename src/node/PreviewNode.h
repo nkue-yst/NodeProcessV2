@@ -6,14 +6,13 @@
  
 #pragma once
 
-#include "GraphicsProcessingNode.h"
+#include "GraphicsNode.h"
 
-class PreviewNode : public GraphicsProcessingNode
+class PreviewNode : public GraphicsNode
 {
 public:
     PreviewNode();
 
 protected:
     void drawContent() override;
-    void process() override {}
 };

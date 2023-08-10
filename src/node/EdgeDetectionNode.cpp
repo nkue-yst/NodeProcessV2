@@ -56,12 +56,8 @@ void EdgeDetectionNode::drawContent()
 
         if (pair_pin)
         {
-            GraphicsNode* connected_node = dynamic_cast<GraphicsNode*>(pair_pin->m_owner);    // Connected node
-
-            if (connected_node)    // If the connected node is valid
-            {
-                this->m_content->m_image = connected_node->getContent<cv::Mat>(pair_pin->m_type);
-            }
+            Node* node = pair_pin->m_owner;
+            this->m_content->m_image = node->getContent<cv::Mat>(pair_pin->m_type);
         }
         else
         {

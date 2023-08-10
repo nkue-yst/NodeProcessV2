@@ -38,28 +38,23 @@ void HistogramNode::drawContent()
 {
     if (this->m_need_update)
     {
-        cv::Mat input_image;
         Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);
 
         if (pair_pin)
         {
-            GraphicsNode* connected_node = dynamic_cast<GraphicsNode*>(pair_pin->m_owner);
-
-            if (connected_node)
-            {
-                this->m_content->m_image = connected_node->getContent<cv::Mat>(pair_pin->m_type);
-            }
+            Node* node = pair_pin->m_owner;
+            this->m_content->m_image = node->getContent<cv::Mat>(pair_pin->m_type);
         }
         else
         {
-            input_image = cv::Mat::zeros(100, 100, CV_8UC3);
+            this->m_content->m_image = cv::Mat::zeros(1, 1, CV_8UC3);
         }
 
         ////////////////////////////////
         ///// Create histgram data /////
         ////////////////////////////////
-        cv::cvtColor(input_image, input_image, cv::COLOR_BGR2GRAY);
-        cv::resize(input_image, input_image, cv::Size(100, 100));
+        cv::cvtColor(this->m_content->m_image, this->m_content->m_image, cv::COLOR_BGR2GRAY);
+        cv::resize(this->m_content->m_image, this->m_content->m_image, cv::Size(100, 100));
 
         int32_t size = sizeof(this->m_data) / sizeof(this->m_data[0]);
         for (int i = 0; i < size; ++i)
@@ -67,11 +62,11 @@ void HistogramNode::drawContent()
             this->m_data[i] = 0;
         }
         
-        for (int y = 0; y < input_image.size().height; ++y)
+        for (int y = 0; y < this->m_content->m_image.size().height; ++y)
         {
-            for (int x = 0; x < input_image.size().width; ++x)
+            for (int x = 0; x < this->m_content->m_image.size().width; ++x)
             {
-                uint32_t value = static_cast<uint32_t>(input_image.at<uint8_t>(y, x));
+                uint32_t value = static_cast<uint32_t>(this->m_content->m_image.at<uint8_t>(y, x));
                 this->m_data[value]++;
             }
         }

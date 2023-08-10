@@ -38,16 +38,12 @@ void BinarizationNode::drawContent()
     {
         this->m_content->m_image.release();
 
-        Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);    // Connected pin
+        Pin* pair_pin = NodeGui::get().m_pin_manager->getPair(this->m_in_pins.at(0)->m_id);
 
         if (pair_pin)
         {
-            Node* connected_node = pair_pin->m_owner;         // Connected node
-
-            if (connected_node)    // If the connected node is valid
-            {
-                this->m_content->m_image = connected_node->getContent<cv::Mat>(pair_pin->m_type);
-            }
+            Node* node = pair_pin->m_owner;
+            this->m_content->m_image = node->getContent<cv::Mat>(pair_pin->m_type);
         }
         else
         {
@@ -58,7 +54,7 @@ void BinarizationNode::drawContent()
         this->resizeFrame();
 
         glDeleteTextures(1, &this->m_gl_texture);
-        this->m_gl_texture = convert_func(&this->m_content->m_image);
+        this->m_gl_texture = this->convert_func(&this->m_content->m_image);
 
         this->m_need_update = false;
     }
@@ -70,7 +66,7 @@ void BinarizationNode::process()
 {
     if (!this->m_content->m_image.empty())
     {
-        cv::cvtColor(this->m_content->m_image, this->m_content->m_image, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(this->m_content->m_image, this->m_content->m_image, cv::COLOR_RGB2GRAY);
 
         cv::threshold(
             this->m_content->m_image,

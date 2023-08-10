@@ -30,6 +30,7 @@ namespace detail
     inline cv::Mat getContent(NodeContent* body, Pin::Type pin_type)
     {
         cv::Mat mat = body->m_image.clone();
+        cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
 
         switch (pin_type)
         {
@@ -106,7 +107,7 @@ public:
     }
 
     // cv::MatからGLuintへの変換
-    inline virtual GLuint convert_func(cv::Mat* mat)
+    GLuint convert_func(cv::Mat* mat)
     {
         if (mat->empty())
         {
@@ -124,9 +125,9 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-        cv::cvtColor((*mat), (*mat), cv::COLOR_RGB2BGR);
+        cv::cvtColor(*mat, *mat, cv::COLOR_BGR2RGB);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (*mat).cols, (*mat).rows, 0, GL_RGB, GL_UNSIGNED_BYTE, (*mat).ptr());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mat->cols, mat->rows, 0, GL_RGB, GL_UNSIGNED_BYTE, mat->ptr());
 
         return texture_id;
     };
