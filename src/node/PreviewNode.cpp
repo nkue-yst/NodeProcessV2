@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/08/10
- * Edited:  2023/08/10
+ * Edited:  2023/08/11
  **********/
 
 #include "PreviewNode.h"
@@ -12,6 +12,7 @@ PreviewNode::PreviewNode()
     ///// Initialize Node /////
     ///////////////////////////
     this->m_name = "Preview";
+    this->m_type = NodeType_Utility;
 
     ///////////////////////////
     ///// Initialize Pins /////
