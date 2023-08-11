@@ -1,7 +1,7 @@
 /**********
  * Author:  Y.Nakaue
  * Created: 2023/04/09
- * Edited:  2023/08/05
+ * Edited:  2023/08/11
  **********/
 
 #include "MenuItem_ImageVideo.h"
@@ -9,11 +9,15 @@
 #include "imgui.h"
 
 #include "NodeGui.h"
+
 #include "BinarizationNode.h"
+#include "BreakRGBNode.h"
+#include "ColorBlendNode.h"
 #include "EdgeDetectionNode.h"
 #include "GrayScallingNode.h"
 #include "HistogramNode.h"
 #include "ImageNode.h"
+#include "PreviewNode.h"
 
 void MenuItem_ImageVideo::draw()
 {
@@ -72,6 +76,28 @@ void MenuItem_ImageVideo::draw()
             Node* new_node = new HistogramNode();
 
             NodeGui::get().m_node_manager->addNode(new_node);
+        }
+
+        ImGui::Spacing();
+        ImGui::Spacing();
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.f), "UTILITY");
+
+        // Create preview node
+        if (ImGui::MenuItem("Preview"))
+        {
+            NodeGui::get().m_node_manager->addNode(new PreviewNode());
+        }
+
+        // Create break rgb node
+        if (ImGui::MenuItem("Break RGB"))
+        {
+            NodeGui::get().m_node_manager->addNode(new BreakRGBNode());
+        }
+
+        // Create color blend node
+        if (ImGui::MenuItem("Color Blend"))
+        {
+            NodeGui::get().m_node_manager->addNode(new ColorBlendNode());
         }
 
         ImGui::EndMenu();

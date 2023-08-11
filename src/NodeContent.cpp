@@ -11,7 +11,7 @@ NodeContent::NodeContent()
 {
     DEBUG("Initialize node content.");
 
-    this->m_image = cv::Mat();
+    this->m_image = cv::Mat::zeros(120, 120, CV_8UC3);
 }
 
 NodeContent::~NodeContent()

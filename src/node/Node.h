@@ -30,7 +30,12 @@ namespace detail
     inline cv::Mat getContent(NodeContent* body, Pin::Type pin_type)
     {
         cv::Mat mat = body->m_image.clone();
-        cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
+
+        if (mat.channels() == 3)
+        {
+            cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
+        
+        }
 
         switch (pin_type)
         {
